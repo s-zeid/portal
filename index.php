@@ -333,7 +333,10 @@ foreach (\$portal["sites"] as \$slug => &\$site) {
 @endif
   </div>
   <div id="footer" class="footer[[if (\$small) echo " small";]]">
-   <p><a href="https://github.com/scottywz/portal">Portal software</a> copyright &copy; [[echo copyright_year(2006);]] Scott Zeid.</p>
+   <p>
+    <a href="https://github.com/scottywz/portal">Portal software</a>
+    copyright &copy; [[echo copyright_year(2006);]] <a href="http://srwz.us/">Scott Zeid</a>.
+   </p>
 @if (\$portal["custom-footer-content"]) echo indent(htmlsymbols(\$portal["custom-footer-content"]), 3);
 @if (\$portal["show-validator-links"]):
 @ /* W3C Validator links */
