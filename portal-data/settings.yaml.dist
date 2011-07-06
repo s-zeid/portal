@@ -23,7 +23,8 @@ banner:
  # Either "text" or "image"
  type:    text
  # Text to display if type is text; image URL if type is image
- # Templum syntax is accepted here.
+ # Templum syntax is accepted here.  Defaults to the portal's name when type is
+ # text.
  content: Home of {{$name}}
 
 # Extra content to put in the footer.  This can be disclaimers, contact info,
