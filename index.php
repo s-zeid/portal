@@ -40,6 +40,7 @@ $debug = False;
 
 ////////////////////////////////////////////////////////////////////////////////
 
+require "$CONFIG_DIR/lib/is_mobile.php";
 require "$CONFIG_DIR/lib/spyc.php";
 require "$CONFIG_DIR/lib/templum_php5.php";
 
@@ -53,6 +54,7 @@ if (!isset($portal["banner"]))
 $use_templum_for_banner_content = isset($portal["banner"]["content"]);
 if (!in_array($portal["banner"]["type"], array("text", "image")))
  $portal["banner"]["type"] = "text";
+
 $openid_enabled = $portal["openid"]["server"] && $portal["openid"]["xrds"] && 
                   $portal["openid"]["delegate"];
 $ga_enabled = $portal["google-analytics"]["account"] &&
@@ -60,6 +62,10 @@ $ga_enabled = $portal["google-analytics"]["account"] &&
 $request_uri = (!empty($_SERVER["REQUEST_URI"])) ? $_SERVER["REQUEST_URI"] : "";
 $url_scheme = (!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] != "off") ? 
               "https" : "http";
+
+// Mobile device detection
+$mobile = is_mobile(False, True);
+$device = is_mobile(True, True);
 
 // Template expansion for config values
 if ($use_templum_for_banner_content)
