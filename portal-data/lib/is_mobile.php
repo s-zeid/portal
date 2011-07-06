@@ -1,10 +1,9 @@
 <?php
 
 /* is_mobile()
- * Shitty mobile device detection using the user agent.
+ * Shitty mobile device detection based on the user agent.
  * 
- * Copyright (C) 2006-2011 Scott Zeid
- * https://github.com/scottywz/portal
+ * Copyright (C) 2009-2011 Scott Zeid
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
