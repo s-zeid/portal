@@ -207,7 +207,7 @@ if (!isset($_GET["css"]) || !trim($_GET["css"]) != "") {
   <link rel="shortcut icon" type="image/png" href="{{\$CONFIG_DIR}}/favicon.png" />
 @endif
 @if (\$_403 || \$_404):
-@if (strpos(rtrim(\$request_uri, "/"), ".php") == strlen(rtrim(\$request_uri, "/") - 4)):
+@if (stripos(rtrim(\$request_uri, "/"), ".php") == strlen(rtrim(\$request_uri, "/")) - 4):
   <base href="{{implode("/",explode("/", rtrim(\$request_uri, "/"), -1))}}/" />
 @else:
   <base href="{{rtrim(\$request_uri, "/")}}/" />
