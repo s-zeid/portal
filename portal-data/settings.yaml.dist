@@ -1,5 +1,3 @@
-%YAML 1.2
----
 # Variables that accept Templum syntax may use the following variables:
 # $action, $CONFIG_DIR, $device, $ga_enabled, $highlight (minibar only),
 # $minibar, $mobile, $name, $narrow, $openid_enabled, $orientation (minibar
@@ -122,4 +120,3 @@ themes:
         link_bg:     '#0A246A' # Alternate:  A6CAF0
         link_bg_h:   '#0A246A'
         link_bg_a:   '#0A246A'
-...
