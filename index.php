@@ -169,43 +169,49 @@ if (!isset($_GET["css"]) || !trim($_GET["css"]) != "") {
 <!--[if lt IE 7]><span class="hide" title="Put IE lt 7 in quirks mode so IE9.js will work right"></span><![endif]-->
 <!DOCTYPE html>
 
-<!--
-
- Portal
- 
- Copyright (C) 2006-2011 Scott Zeid
- https://github.com/scottywz/portal
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- 
- Except as contained in this notice, the name(s) of the above copyright holders
- shall not be used in advertising or otherwise to promote the sale, use or
- other dealings in this Software without prior written authorization.
-
--->
-
 <html>
  <head>
   <meta charset="utf-8" />
+  <!--
+  
+   Portal
+   
+   Copyright (C) 2006-2011 Scott Zeid
+   https://github.com/scottywz/portal
+   
+   Permission is hereby granted, free of charge, to any person obtaining a copy
+   of this software and associated documentation files (the "Software"), to deal
+   in the Software without restriction, including without limitation the rights
+   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+   copies of the Software, and to permit persons to whom the Software is
+   furnished to do so, subject to the following conditions:
+   
+   The above copyright notice and this permission notice shall be included in
+   all copies or substantial portions of the Software.
+   
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+   THE SOFTWARE.
+   
+   Except as contained in this notice, the name(s) of the above copyright holders
+   shall not be used in advertising or otherwise to promote the sale, use or
+   other dealings in this Software without prior written authorization.
+  
+  -->
   <title>{{\$portal["name"]}}</title>
 @if (file_exists("\$CONFIG_DIR/favicon.png")):
   <link rel="shortcut icon" type="image/png" href="{{\$CONFIG_DIR}}/favicon.png" />
+@endif
+@if (\$_403 || \$_404):
+@if (strpos(rtrim(\$request_uri, "/"), ".php") == strlen(rtrim(\$request_uri, "/") - 4)):
+  <base href="{{implode("/",explode("/", rtrim(\$request_uri, "/"), -1))}}/" />
+@else:
+  <base href="{{rtrim(\$request_uri, "/")}}/" />
+@endif
 @endif
 @if (\$openid_enabled):
 @ /* OpenID */
@@ -337,7 +343,8 @@ foreach (\$portal["sites"] as \$slug => &\$site) {
     <a href="https://github.com/scottywz/portal">Portal software</a>
     copyright &copy; [[echo copyright_year(2006);]] <a href="http://srwz.us/">Scott Zeid</a>.
    </p>
-@if (\$portal["custom-footer-content"]) echo indent(htmlsymbols(\$portal["custom-footer-content"]), 3);
+[[if (\$portal["custom-footer-content"])
+   echo indent(htmlsymbols(trim(\$portal["custom-footer-content"], "\r\n")), 3)."\n";]]
 @if (\$portal["show-validator-links"]):
 @ /* W3C Validator links */
    <p>
