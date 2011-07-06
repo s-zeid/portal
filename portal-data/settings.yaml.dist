@@ -60,7 +60,7 @@ openid:
 # Format:
 #     machine-readable-name--only-letters-numbers-underscores-and-hyphens:
 #         name: Name you want visitors to see
-#         icon: Icon filename under CONFIG_DIR/icons and icons/small
+#         icon: Icon filename under $CONFIG_DIR/icons & $CONFIG_DIR/icons/small
 #         url:  URL of the site
 #         desc: Optional text description
 #         index: Set to False to hide in the main list; leave out otherwise
