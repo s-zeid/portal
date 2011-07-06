@@ -1,0 +1,125 @@
+%YAML 1.2
+---
+# Variables that accept Templum syntax may use the following variables:
+# $action, $CONFIG_DIR, $device, $ga_enabled, $highlight (minibar only),
+# $minibar, $mobile, $name, $narrow, $openid_enabled, $orientation (minibar
+# only), $portal, $request_uri, $small, $theme, $url_scheme
+# $portal is the values in this file after processing.
+
+# Name of your portal
+name: B. Nay (b. 1992)
+# Main URL of your portal (used in the top banner); defaults to request URL
+url:  http://bnay.example/
+
+# Default theme name (see the "themes" key)
+theme: red
+# Whether the listing should be narrow
+narrow: False
+# Whether the list images and text should be small
+small: False
+# Default minibar orientation (horizontal or vertical)
+minibar-orientation: horizontal
+
+# The top banner
+banner:
+ # Either "text" or "image"
+ type:    text
+ # Text to display if type is text; image URL if type is image
+ # Templum syntax is accepted here.
+ content: Home of {{$name}}
+
+# Extra content to put in the footer.  This can be disclaimers, contact info,
+# or anything else you see fit.  Templum syntax is accepted here.
+custom-footer-content: |
+ <p>Send spam to <a href="mailto:spam@greenmidgetcafe.com">spam@greenmidgetcafe.com</a></p>
+
+# Whether to show W3C Validator links
+# Set to False if you don't want to show them, or if you know that your portal
+# will not validate and you don't want to fix it (although you should)
+show-validator-links: True
+
+# Optional value for the link target attribute; defaults to nothing
+# Example: _blank
+link-target: 
+
+# Optional Google Analytics credentials
+google-analytics:
+    # Account number
+    account: 
+    # Set to "old" if you want to use the old style code; new is recommended.
+    style:   new
+
+# Optional OpenID header tag stuff
+openid:
+    # OpenID server URL
+    server:   
+    # Delegate URL
+    delegate: 
+    # XRDS URL
+    xrds:     
+
+# Sites you want to link to
+# Format:
+#     machine-readable-name--only-letters-numbers-underscores-and-hyphens:
+#         name: Name you want visitors to see
+#         icon: Icon filename under CONFIG_DIR/icons and icons/small
+#         url:  URL of the site
+#         desc: Optional text description
+#         index: Set to False to hide in the main list; leave out otherwise
+#         minibar: Set to False to hide in the minibar list; leave out otherwise
+sites:
+    scott-zeid:
+        name: Scott Zeid
+        icon: scottywz.png
+        url:  http://srwz.us/
+        desc: This <del>really cool person</del> f***ing narcissist who made this portal software
+
+# Themes
+# Templum syntax is accepted here.
+themes:
+    red:
+        bg:          '#636363 url("{{$CONFIG_DIR}}/theme-files/red/background.png") repeat-x fixed'
+        fg:          ['#FFF', '#EEE', '#DDD', '#CCC']
+        logo_bg:     '#700'
+        logo_border: '#300'
+        ico_bg:      '#FFF'
+        link_bg:     '#800'
+        link_bg_h:   '#700'
+        link_bg_a:   '#600'
+    red-dark-bg:
+        bg:          '#444'
+        fg:          ['#FFF', '#EEE', '#DDD', '#CCC']
+        logo_bg:     '#600'
+        logo_border: '#300'
+        ico_bg:      '#FFF'
+        link_bg:     '#700'
+        link_bg_h:   '#600'
+        link_bg_a:   '#500'
+    brown-red:
+        bg:          '#441A00'
+        fg:          ['#FFF', '#EEE', '#DDD', '#CCC']
+        logo_bg:     '#700'
+        logo_border: '#300'
+        ico_bg:      '#500'
+        link_bg:     '#900'
+        link_bg_h:   '#800'
+        link_bg_a:   '#700'
+    red-green:
+        bg:          '#040'
+        fg:          ['#FFF', '#EEE', '#DDD', '#CCC']
+        logo_bg:     '#700'
+        logo_border: '#300'
+        ico_bg:      '#500'
+        link_bg:     '#900'
+        link_bg_h:   '#800'
+        link_bg_a:   '#700'
+    win-classic:
+        bg:          '#3A6EA5'
+        fg:          ['#FFF', '#EEE', '#DDD', '#CCC']
+        logo_bg:     transparent
+        logo_border: '#FFF'
+        ico_bg:      '#3A6EA5'
+        link_bg:     '#0A246A' # Alternate:  A6CAF0
+        link_bg_h:   '#0A246A'
+        link_bg_a:   '#0A246A'
+...
