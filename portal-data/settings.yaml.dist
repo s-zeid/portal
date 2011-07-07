@@ -49,11 +49,24 @@ google-analytics:
     style:   new
 
 # Optional OpenID header tag stuff
+# 
+# You would get these URLs from your OpenID provider's help pages; look for a
+# section that says something like "Use your own URL" and gives you some HTML
+# code.  Then take the URLs from that code and paste them into the respective
+# keys here.
+# 
+# You can omit either provider and local_id or server and delegate if your
+# provider does not give you those URLs.  However, server and provider are
+# often the same, as are delegate and local_id.
 openid:
     # OpenID server URL
     server:   
+    # OpenID provider URL
+    provider: 
     # Delegate URL
     delegate: 
+    # Local ID URL
+    local_id: 
     # XRDS URL
     xrds:     
 
