@@ -55,10 +55,16 @@ $use_templum_for_banner_content = isset($portal["banner"]["content"]);
 if (!in_array($portal["banner"]["type"], array("text", "image")))
  $portal["banner"]["type"] = "text";
 
-$openid_enabled = $portal["openid"]["server"] && $portal["openid"]["xrds"] && 
-                  $portal["openid"]["delegate"];
-$ga_enabled = $portal["google-analytics"]["account"] &&
+$openid_enabled = !empty($portal["openid"]["xrds"]) &&
+                  ((!empty($portal["openid"]["provider"]) &&
+                    !empty($portal["openid"]["local_id"])) ||
+                   (!empty($portal["openid"]["server"]) &&
+                    !empty($portal["openid"]["delegate"])));
+
+$ga_enabled = !empty($portal["google-analytics"]["account"]) &&
+              !empty($portal["google-analytics"]["style"]) &&
               in_array($portal["google-analytics"]["style"],array("new","old"));
+
 $request_uri = (!empty($_SERVER["REQUEST_URI"])) ? $_SERVER["REQUEST_URI"] : "";
 $url_scheme = (!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] != "off") ? 
               "https" : "http";
@@ -146,7 +152,10 @@ if (!isset($_GET["css"]) || !trim($_GET["css"]) != "") {
  $target = (!empty($_GET["target"])) ? $_GET["target"] : $portal["link-target"];
  $theme = (!empty($_GET["theme"])) ? $_GET["theme"] : $theme;
  $narrow = (isset($_GET["narrow"])) ? True : $portal["narrow"];
+ if (isset($_GET["!narrow"]) || isset($_GET["wide"])) $narrow = False;
  $small = (isset($_GET["small"])) ? True : $portal["small"];
+ if (isset($_GET["!small"]) || isset($_GET["large"]) || isset($_GET["big"]))
+  $small = False;
  $_403 = isset($_GET["403"]);
  $_404 = isset($_GET["404"]);
  if ($_403 || $_404) {
@@ -163,7 +172,8 @@ if (!isset($_GET["css"]) || !trim($_GET["css"]) != "") {
  
  // Yadis XRDS header; needs to be sent as a proper header instead of a meta
  // tag in order to validate as HTML5
- header("X-XRDS-Location: ".rawurlencode($portal['openid']['xrds']));
+ if ($openid_enabled)
+  header("X-XRDS-Location: ".rawurlencode($portal["openid"]["xrds"]));
  
  echo htmlsymbols(tpl(<<<HTML
 <!--[if lt IE 7]><span class="hide" title="Put IE lt 7 in quirks mode so IE9.js will work right"></span><![endif]-->
@@ -216,8 +226,18 @@ if (!isset($_GET["css"]) || !trim($_GET["css"]) != "") {
 @if (\$openid_enabled):
 @ /* OpenID */
   <!--openid-->
-   <link rel="openid.server" href="{{\$portal['openid']['server']}}" />
-   <link rel="openid.delegate" href="{{\$portal['openid']['delegate']}}" />
+@if (!empty(\$portal["openid"]["provider"])):
+   <link rel="openid2.provider" href="{{\$portal["openid"]["provider"]}}" />
+@endif
+@if (!empty(\$portal["openid"]["local_id"])):
+   <link rel="openid2.local_id" href="{{\$portal["openid"]["local_id"]}}" />
+@endif
+@if (!empty(\$portal["openid"]["server"])):
+   <link rel="openid.server" href="{{\$portal["openid"]["server"]}}" />
+@endif
+@if (!empty(\$portal["openid"]["delegate"])):
+   <link rel="openid.delegate" href="{{\$portal["openid"]["delegate"]}}" />
+@endif
   <!--/openid-->
 @endif // OpenID
   <meta name="generator" content="Portal by Scott Zeid; X11 License; https://github.com/scottywz/portal" />
