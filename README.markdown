@@ -4,6 +4,21 @@ Portal
 Copyright (C) 2006-2011 Scott Zeid  
 https://github.com/scottywz/portal
 
+Introduction
+------------
+Portal is a PHP script that displays a list of Web sites.  It can be used as
+a personal home page, for example.  Here are some features of Portal:
+
+* Each site can have a name, icon, and description.
+* The color scheme and various layout options can be customized.
+* Contains optimizations for smartphone browsers.
+* Contains a "minibar" mode that can be added to the top or side of your other
+  sites as an iframe.  The active site can be highlighted.
+* Supports Google Analytics with both new- and old-style code.
+* Supports OpenID header tags.
+* Validates as HTML 5 and CSS 3.
+* Free, open source software released under the X11 License.
+
 Installation
 ------------
 To install Portal:
@@ -95,7 +110,7 @@ you want highlighted.  For example, if your sites section looks like this:
     sites:
         awesome-site:
             name: My awesome site
-            icon: awesome.png
+            icon: awesome-site.png
             url:  http://awesome.site.example/
             desc: There's some awesome s*** here!
 
