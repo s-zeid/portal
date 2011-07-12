@@ -25,7 +25,23 @@ banner:
  # Text to display if type is text; image URL if type is image
  # Templum syntax is accepted here.  Defaults to the portal's name when type is
  # text.
- content: Home of {{$name}}
+ content: 
+
+# Sites you want to link to
+# Format:
+#     machine-readable-name--only-letters-numbers-underscores-and-hyphens:
+#         name: Name you want visitors to see
+#         icon: Icon filename under $CONFIG_DIR/icons & $CONFIG_DIR/icons/small
+#         url:  URL of the site
+#         desc: Optional text description
+#         index: Set to False to hide in the main list; leave out otherwise
+#         minibar: Set to False to hide in the minibar list; leave out otherwise
+sites:
+    scott-zeid:
+        name: Scott Zeid
+        icon: scottywz.png
+        url:  http://srwz.us/
+        desc: This <del>really cool person</del> f***ing narcissist who made this portal software
 
 # Extra content to put in the footer.  This can be disclaimers, contact info,
 # or anything else you see fit.  Templum syntax is accepted here.
@@ -69,22 +85,6 @@ openid:
     local_id: 
     # XRDS URL
     xrds:     
-
-# Sites you want to link to
-# Format:
-#     machine-readable-name--only-letters-numbers-underscores-and-hyphens:
-#         name: Name you want visitors to see
-#         icon: Icon filename under $CONFIG_DIR/icons & $CONFIG_DIR/icons/small
-#         url:  URL of the site
-#         desc: Optional text description
-#         index: Set to False to hide in the main list; leave out otherwise
-#         minibar: Set to False to hide in the minibar list; leave out otherwise
-sites:
-    scott-zeid:
-        name: Scott Zeid
-        icon: scottywz.png
-        url:  http://srwz.us/
-        desc: This <del>really cool person</del> f***ing narcissist who made this portal software
 
 # Themes
 # Templum syntax is accepted here.
