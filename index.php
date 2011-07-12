@@ -519,7 +519,7 @@ img {
  .site.has-url:active, #minibar a:active {
   background: {{\$theme["link_bg_a"]}};
  }
-  .site a, site > span {
+  .site a, .site > span {
    display: block;
   }
   .site img {
