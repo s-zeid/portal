@@ -19,7 +19,7 @@ a personal home page, for example.  Here are some features of Portal:
 * Validates as HTML 5 and CSS 3.
 * Free, open source software released under the X11 License.
 
-To see a live example of Portal, go to http://srwz.us/.  You can also [look at
+To see a live example of Portal, go to http://srwz.us/.  You may also [look at
 its configuration file](http://srwz.us/portal-data/settings.yaml).
 
 Installation
