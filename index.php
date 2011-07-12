@@ -554,6 +554,7 @@ img {
    display: block;
    margin-left: 52px; margin-right: 12px;
    padding-bottom: 12px;
+   text-align: justify;
   }
   .small .site .desc {
    margin-left: 28px; margin-right: 8px;
