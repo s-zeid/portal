@@ -247,7 +247,7 @@ if (!isset($_GET["css"]) || !trim($_GET["css"]) != "") {
    <link rel="stylesheet" type="text/css" href="{{\$CONFIG_DIR}}/pngtrans.css" />
   <![endif]-->
   <link rel="stylesheet" type="text/css" href="{{\$url_scheme}}://fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold,bolditalic" />
-  <link rel="stylesheet" type="text/css" href="?css={{\$theme}}&amp;amp;.css" />
+  <link rel="stylesheet" type="text/css" href="?css={{\$theme}}&amp;.css" />
 @if (\$mobile):
   <meta name="viewport" content="width=532; initial-scale=0.6; minimum-scale: 0.6" />
 @endif
@@ -275,7 +275,8 @@ if (!isset($_GET["css"]) || !trim($_GET["css"]) != "") {
 
 /* Minibar site list */
 foreach (\$portal["sites"] as \$slug => &\$site) {
- if (!isset(\$site["minibar"]) || \$site["minibar"] !== False) {
+ if ((!isset(\$site["minibar"]) || \$site["minibar"] !== False) &&
+     !empty(\$site["url"])) {
   \$code = "";
   if (\$orientation == "vertical") \$code .= "<div>";
   // Link
@@ -333,12 +334,15 @@ foreach (\$portal["sites"] as \$slug => &\$site) {
 foreach (\$portal["sites"] as \$slug => &\$site) {
  if (!isset(\$site["index"]) || \$site["index"] !== False) {
   \$code = "";
-  \$code .= "<p class=\"site\">\n";
+  \$code .= "<p class=\"site".((!empty(\$site["url"]))?" has-url":"")."\">\n";
   // Link
-  \$code .= " <a href=\"".htmlentitiesu8(\$site["url"], True)."\"";
+  if (!empty(\$site["url"])) {
+   \$code .= " <a href=\"".htmlentitiesu8(\$site["url"], True)."\"";
   // Link target
   if (\$target) \$code .= " target=\"\$target\"";
   \$code .= ">\n";
+  } else
+   \$code .= " <span>\n";
   // Image
   \$code .= "  <span><img src=\"\$CONFIG_DIR/icons";
   if (\$small) \$code .= "/small";
@@ -349,7 +353,7 @@ foreach (\$portal["sites"] as \$slug => &\$site) {
   if (isset(\$site["desc"]) && trim(\$site["desc"]))
    \$code .= "<br />\n  <span class=\"desc\">".htmlsymbols(\$site["desc"])."</span>";
   // Close stuff
-  \$code .= "\n </a>\n</p>";
+  \$code .= "\n ".((!empty(\$site["url"])) ? "</a>" : "</span>")."\n</p>";
   echo indent(\$code, 3);
   echo "\n";
  }
@@ -453,10 +457,10 @@ body {
 a {
  color: {{\$theme["fg"][1]}}; text-decoration: none;
 }
-a:hover, .site:hover * {
+a:hover, .site.has-url:hover * {
  color: {{\$theme["fg"][2]}};
 }
-a:active, .site:active * {
+a:active, .site.has-url:active * {
  color: {{\$theme["fg"][3]}};
 }
 h1, .h1 {
@@ -509,13 +513,13 @@ img {
   text-align: left;
   background: {{\$theme["link_bg"]}};
  }
- .site:hover, #minibar a:hover {
+ .site.has-url:hover, #minibar a:hover {
   background: {{\$theme["link_bg_h"]}};
  }
- .site:active, #minibar a:active {
+ .site.has-url:active, #minibar a:active {
   background: {{\$theme["link_bg_a"]}};
  }
-  .site a {
+  .site a, site > span {
    display: block;
   }
   .site img {

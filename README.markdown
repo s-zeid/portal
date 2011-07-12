@@ -130,3 +130,16 @@ that is fixed to the left-hand side of the screen:
        style="width: 24px; height: 100%; border-style: none; overflow: hidden;"
        frameborder="0"></iframe>
     </div>
+
+If you do not want a site to appear in the minibar, add the following line to
+your site:
+
+            minibar: False
+
+If you want the site to appear in the minibar but not the main page, add this:
+
+            index: False
+
+You can also add both lines if you want to completely hide the site from your
+Portal.  If the URL is not set, then the site will automatically be hidden from
+the minibar.
