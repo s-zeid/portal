@@ -278,7 +278,7 @@ foreach (\$portal["sites"] as \$slug => &\$site) {
   <div id="header" class="{{\$portal["banner"]["type"]}}[[if (\$small) echo ' small';]]">
    <h1 id="title">
     <span>
-     <a id="title" href="{{\$request_uri}}">
+     <a href="{{\$request_uri}}">
 @if (\$portal["banner"]["type"] == "image"):
 @ /* Image banner */
       <img src="[[echo htmlentitiesu8((!empty(\$portal["banner"]["content"]))
