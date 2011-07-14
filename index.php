@@ -51,9 +51,11 @@ $name = $portal["name"] = $portal["name"];
 $theme = $portal["theme"] = $portal["theme"];
 if (!isset($portal["banner"]))
  $portal["banner"] = array("type" => "text", "content" => $name);
-$use_templum_for_banner_content = isset($portal["banner"]["content"]);
-if (!in_array($portal["banner"]["type"], array("text", "image")))
+$portal["banner"]["type"] = strtolower($portal["banner"]["type"]);
+if (!in_array($portal["banner"]["type"], array("text", "image", "none")))
  $portal["banner"]["type"] = "text";
+$use_templum_for_banner_content = isset($portal["banner"]["content"]) &&
+                                  $portal["banner"]["type"] != "none";
 
 $openid_enabled = !empty($portal["openid"]["xrds"]) &&
                   ((!empty($portal["openid"]["provider"]) &&
@@ -302,23 +304,28 @@ foreach (\$portal["sites"] as \$slug => &\$site) {
 @//Minibar
 @else:
 @ /* Normal mode */
-  <div id="header"[[if (\$small) echo ' class="small"';]]>
-   <h1>
-@  /* Banner */
-    <a id="title" class="{{\$portal["banner"]["type"]}}" href="{{\$request_uri}}">
+@if (\$portal["banner"]["type"] != "none"):
+@ /* Banner */
+  <div id="header" class="{{\$portal["banner"]["type"]}}[[if (\$small) echo ' small';]]">
+   <h1 id="title">
+    <span>
+     <a id="title" href="{{\$request_uri}}">
 @if (\$portal["banner"]["type"] == "image"):
-     <img src="[[echo htmlentitiesu8((!empty(\$portal["banner"]["content"]))
-                       ? \$portal["banner"]["content"]
-                       : "\$CONFIG_DIR/images/banner.png", True
-                      );]]" alt="{{\$name}}" />
-@else:
+@ /* Image banner */
+      <img src="[[echo htmlentitiesu8((!empty(\$portal["banner"]["content"]))
+                        ? \$portal["banner"]["content"]
+                        : "\$CONFIG_DIR/images/banner.png", True
+                       );]]" alt="{{\$name}}" />
+@else: // Image banner
+@ /* Text banner */
 [[echo indent(htmlsymbols((!empty(\$portal["banner"]["content"]))
-               ? \$portal["banner"]["content"] : \$name), 5)."\n";]]
-@endif
-    </a>
-@  // Banner
+               ? \$portal["banner"]["content"] : \$name), 6)."\n";]]
+@endif // Text banner
+     </a>
+    </span>
    </h1>
   </div>
+@endif // Banner
   <div id="body"[[if (\$narrow || \$small) {
 ]] class="[[if (\$narrow) echo "narrow"; if (\$narrow && \$small) echo " ";
             if (\$small) echo "small";]]"[[
@@ -484,15 +491,15 @@ img {
 #header {
  margin: 1em;
 }
- #header a {
-  color: {{\$theme["fg"][0]}};
- }
- #title.text {
+ #header.text #title span {
   background: {{\$theme["logo_bg"]}};
-@if (\$theme["logo_bg"] != "transparent"):
+@if (stripos(\$theme["logo_bg"], "transparent") === False):
   border: 1px solid {{\$theme["logo_border"]}};
 @endif
-  padding: 0.2em;
+  padding: .2em;
+ }
+ #header a {
+  color: {{\$theme["fg"][0]}};
  }
 #body {
  width: 500px;

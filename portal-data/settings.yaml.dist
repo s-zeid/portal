@@ -20,7 +20,7 @@ minibar-orientation: horizontal
 
 # The top banner
 banner:
- # Either "text" or "image"
+ # Either "text", "image", or "none"
  type:    text
  # Text to display if type is text; image URL if type is image
  # Templum syntax is accepted here.  Defaults to the portal's name when type is
