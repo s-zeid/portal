@@ -3,6 +3,10 @@
 # $minibar, $mobile, $name, $narrow, $openid_enabled, $orientation (minibar
 # only), $portal, $request_uri, $small, $theme, $url_scheme
 # $portal is the values in this file after processing.
+#
+# If a string value starts with a { or [ (Templum special characters), then
+# you must wrap the string in quotes or else YAML will think it's a mapping or
+# array, which you probably don't want.
 
 # Name of your portal
 name: B. Nay (b. 1992)
@@ -30,10 +34,10 @@ banner:
 # Sites you want to link to
 # Format:
 #     machine-readable-name--only-letters-numbers-underscores-and-hyphens:
-#         name: Name you want visitors to see
+#         name: Name you want visitors to see; accepts Templum syntax
 #         icon: Icon filename under $CONFIG_DIR/icons & $CONFIG_DIR/icons/small
 #         url:  URL of the site
-#         desc: Optional text description
+#         desc: Optional text description; accepts Templum syntax
 #         index: Set to False to hide in the main list; leave out otherwise
 #         minibar: Set to False to hide in the minibar list; leave out otherwise
 sites:

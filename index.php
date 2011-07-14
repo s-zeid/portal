@@ -75,58 +75,12 @@ $url_scheme = (!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] != "off") ?
 $mobile = is_mobile(False, True);
 $device = is_mobile(True, True);
 
-// Template expansion for config values
-if ($use_templum_for_banner_content)
- $portal["banner"]["content"] = tpl($portal["banner"]["content"]);
-if (isset($portal["custom-footer-content"]))
- $portal["custom-footer-content"] = tpl($portal["custom-footer-content"]);
-
 // Template namespace
 $namespace = array();
 $names = explode(",", "CONFIG_DIR,device,ga_enabled,mobile,name,"
           ."openid_enabled,portal,request_uri,url_scheme");
 foreach ($names as $n) {
  $namespace[$n] = &$$n;
-}
-
-// Helper functions
-function copyright_year($start = Null, $end = Null) {
- if (!$start) $start = date("Y");
- if (!$end) $end = date("Y");
- if ($start == $end) return $start;
- return $start."-".$end;
-}
-function htmlentitiesu8($s, $encode_twice = False) {
- if ($encode_twice) $s = htmlentitiesu8($s, False);
- return htmlentities($s, ENT_COMPAT, "UTF-8");
-}
-function htmlsymbols($s, $encode_twice = False) {
- return htmlspecialchars_decode(htmlentitiesu8($s, $encode_twice));
-}
-function indent($s, $n) {
- $s = explode("\n", $s);
- foreach ($s as $i => $l) {
-  $s[$i] = str_repeat(" ", $n).$l;
- }
- return implode("\n", $s);
-}
-function tpl($s, $namespace = Null, $esc = True) {
- global $portal;
- if (is_null($namespace)) $namespace = $portal;
- return Templum::templateFromString($s, $esc)->render($namespace);
-}
-function tpl_r($s, $namespace = Null, $esc = True) {
- if (is_array($s)) {
-  foreach ($s as $k => &$v) {
-   if (is_array($v) || is_string($v))
-    $s[$k] = tpl_r($v, $namespace, $esc);
-  }
-  return $s;
- }
- elseif (is_string($s))
-  return tpl($s, $namespace, $esc);
- else
-  return $s;
 }
 
 if ($debug) {
@@ -170,6 +124,21 @@ if (!isset($_GET["css"]) || !trim($_GET["css"]) != "") {
            ."request_uri,small,target,theme");
  foreach ($names as $n) {
   $namespace[$n] = &$$n;
+ }
+ 
+ // Template expansion for config values
+ if ($use_templum_for_banner_content)
+  $portal["banner"]["content"] = tpl($portal["banner"]["content"], $namespace);
+ if (isset($portal["custom-footer-content"]))
+  $portal["custom-footer-content"] = tpl($portal["custom-footer-content"],
+                                         $namespace);
+ if (is_array($portal["sites"])) {
+  foreach ($portal["sites"] as $slug => &$site) {
+   if (!empty($site["name"]))
+    $site["name"] = tpl($site["name"], $namespace);
+   if (!empty($site["desc"]))
+    $site["desc"] = tpl($site["desc"], $namespace);
+  }
  }
  
  // Yadis XRDS header; needs to be sent as a proper header instead of a meta
@@ -659,5 +628,53 @@ CSS
 , $namespace, False);
 
 } // CSS Template
+
+/* Helper functions */
+
+function copyright_year($start = Null, $end = Null) {
+ if (!$start) $start = date("Y");
+ if (!$end) $end = date("Y");
+ if ($start == $end) return $start;
+ return $start."-".$end;
+}
+
+function htmlentitiesu8($s, $encode_twice = False) {
+ if ($encode_twice) $s = htmlentitiesu8($s, False);
+ return htmlentities($s, ENT_COMPAT, "UTF-8");
+}
+
+function htmlsymbols($s, $encode_twice = False) {
+ return htmlspecialchars_decode(htmlentitiesu8($s, $encode_twice));
+}
+
+function indent($s, $n) {
+ $s = explode("\n", $s);
+ foreach ($s as $i => $l) {
+  $s[$i] = str_repeat(" ", $n).$l;
+ }
+ return implode("\n", $s);
+}
+
+function tpl($s, $namespace = Null, $esc = True) {
+ global $portal;
+ if (is_null($namespace)) $namespace = $portal;
+ return Templum::templateFromString($s, $esc)->render($namespace);
+}
+
+function tpl_r($s, $namespace = Null, $esc = True) {
+ if (is_array($s)) {
+  foreach ($s as $k => &$v) {
+   if (is_array($v) || is_string($v))
+    $s[$k] = tpl_r($v, $namespace, $esc);
+  }
+  return $s;
+ }
+ elseif (is_string($s))
+  return tpl($s, $namespace, $esc);
+ else
+  return $s;
+}
+
+// Helper functions
 
 ?>
