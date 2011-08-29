@@ -45,7 +45,11 @@ require "$CONFIG_DIR/lib/spyc.php";
 require "$CONFIG_DIR/lib/templum_php5.php";
 
 // Configuration loading and sanitation
-$portal = spyc_load_file("$CONFIG_DIR/settings.yaml");
+$portal = spyc_load(
+           str_replace("\r\n", "\n", str_replace("\r", "\n", file_get_contents(
+            "$CONFIG_DIR/settings.yaml"
+           )))
+          );
 $portal["CONFIG_DIR"] = $CONFIG_DIR;
 $name = $portal["name"] = $portal["name"];
 $theme = $portal["theme"] = $portal["theme"];
@@ -255,10 +259,15 @@ foreach (\$portal["sites"] as \$slug => &\$site) {
   // Highlight
   if (\$highlight == \$slug) \$code .= ' class="highlight"';
   // Site name
-  \$code .= " title=\"".htmlentitiesu8(strip_tags(\$site["name"]), True);
+  \$name = str_replace("\n", " ", htmlentitiesu8(strip_tags(\$site["name"]), False));
+  \$name = str_replace("&amp;", "&", \$name);
+  \$code .= " title=\"".\$name;
   // Site description
-  if (isset(\$site["desc"]) && trim(\$site["desc"]))
-   \$code .= " &mdash; ".htmlentitiesu8(strip_tags(\$site["desc"]), True);
+  if (isset(\$site["desc"]) && trim(\$site["desc"])) {
+   \$desc = str_replace("\n", " ", htmlentitiesu8(strip_tags(\$site["desc"]), False));
+   \$desc = str_replace("&amp;", "&", \$desc);
+   \$code .= " &mdash; ".\$desc;
+  }
   // Icon
   \$code .= "\"><img src=\"\$CONFIG_DIR/icons/small/".htmlentitiesu8(\$site["icon"], True)."\"";
   \$code .= " alt=\"Icon\" /></a>";
@@ -641,6 +650,11 @@ function copyright_year($start = Null, $end = Null) {
 function htmlentitiesu8($s, $encode_twice = False) {
  if ($encode_twice) $s = htmlentitiesu8($s, False);
  return htmlentities($s, ENT_COMPAT, "UTF-8");
+}
+
+function htmlspecialcharsu8($s, $encode_twice = False) {
+ if ($encode_twice) $s = htmlspecialcharsu8($s, False);
+ return htmlspecialchars($s, ENT_COMPAT, "UTF-8");
 }
 
 function htmlsymbols($s, $encode_twice = False) {
