@@ -55,7 +55,7 @@ Portal supports the following query string parameters:
 * `target` - use the specified value as the target attribute for site links
 * `theme` - use the specified theme name (must be a key in `settings.yaml` >
             `themes`)
-* `_403`, `_404` - causes Portal to render a 403 or 404 error page
+* `403`, `404` - causes Portal to render a 403 or 404 error page
 
 OpenID support
 --------------
