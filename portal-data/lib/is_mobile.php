@@ -39,11 +39,13 @@
  * 
  * device=[...] takes precedence over mobile=[...].
  * 
- * Valid device types are android, webos, unknown, apple, and apple-tablet.
- * iPads are not considered to be mobile devices, but this function will still
- * return "apple-tablet" as the device name.  Support for Android and webOS
- * tablets may be added in the future; the device name will be "android-tablet"
- * or "webos-tablet".
+ * Valid device types are android, android-tablet, webos, unknown, apple, and
+ * apple-tablet.  Devices running Android 3.x (Honeycomb) and iPads are not
+ * considered to be mobile devices, but this function will still return
+ * "android-tablet" or "apple-tablet" as the device name, respectively.
+ * Support for Android 4.x (Ice Cream Sandwich) tablets and webOS tablets may
+ * be added in the future; the device name for webOS tablets would be
+ * "webos-tablet".
  * 
  * @param bool $return_device Return a string representing the type of device.
  * @param bool $use_get Allow overriding default behavior using query strings.
@@ -73,7 +75,8 @@ function is_mobile($return_device = False, $use_get = True) {
  # is mobile device?
  if (((
     stristr($user_agent, "iPhone") || stristr($user_agent, "iPod") ||
-    stristr($user_agent, "Android") || stristr($user_agent, "webOS")
+    (stristr($user_agent, "Android") && !stristr($user_agent, "Android 3")) ||
+    stristr($user_agent, "webOS")
    ) && $nomobile == False) || $forcemobile == True)
   $mobile = True;
  else
