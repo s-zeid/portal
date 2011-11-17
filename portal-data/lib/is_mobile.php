@@ -87,6 +87,7 @@ function is_mobile($return_device = False, $use_get = True) {
   $device = "apple";
  if (stristr($user_agent, "iPad")) $device = "apple-tablet";
  if (stristr($user_agent, "Android")) $device = "android";
+ if (stristr($user_agent, "Android 3")) $device = "android-tablet";
  if (stristr($user_agent, "webOS")) $device = "webos";
  if ($forcedevice != "") $device = $forcedevice;
  if ($forcedevice == "iphone" || $forcedevice == "ipod") $device = "apple";
