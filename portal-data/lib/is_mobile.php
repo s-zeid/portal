@@ -39,13 +39,16 @@
  * 
  * device=[...] takes precedence over mobile=[...].
  * 
- * Valid device types are android, android-tablet, webos, unknown, apple, and
- * apple-tablet.  Devices running Android 3.x (Honeycomb) and iPads are not
- * considered to be mobile devices, but this function will still return
- * "android-tablet" or "apple-tablet" as the device name, respectively.
- * Support for Android 4.x (Ice Cream Sandwich) tablets and webOS tablets may
- * be added in the future; the device name for webOS tablets would be
- * "webos-tablet".
+ * Valid device types are android, android-tablet, fennec, fennec-android,
+ * webos, unknown, tablet, apple, and apple-tablet.  Devices running Android
+ * (Honeycomb) and iPads are not considered to be mobile devices, but this
+ * function will still return "android-tablet" or "apple-tablet" as the device
+ * name, respectively.  Support for Android 4.x (Ice Cream Sandwich) tablets
+ * and the HP Touchpad may be added in the future; the device name for the
+ * Touchpad would be "webos-tablet".  If the user is running Firefox Mobile,
+ * the device type will be "fennec" or "fennec-android".  Tablet detection is
+ * currently not supported for Firefox Mobile as tablet status is not present
+ * in its UA string.
  * 
  * @param bool $return_device Return a string representing the type of device.
  * @param bool $use_get Allow overriding default behavior using query strings.
@@ -76,7 +79,7 @@ function is_mobile($return_device = False, $use_get = True) {
  if (((
     stristr($user_agent, "iPhone") || stristr($user_agent, "iPod") ||
     (stristr($user_agent, "Android") && !stristr($user_agent, "Android 3")) ||
-    stristr($user_agent, "webOS")
+    stristr($user_agent, "webOS") || stristr($user_agent, "Fennec")
    ) && $nomobile == False) || $forcemobile == True)
   $mobile = True;
  else
@@ -86,6 +89,8 @@ function is_mobile($return_device = False, $use_get = True) {
  if (stristr($user_agent, "iPhone") || stristr($user_agent, "iPod"))
   $device = "apple";
  if (stristr($user_agent, "iPad")) $device = "apple-tablet";
+ if (stristr($user_agent, "Fennec"))
+  $device = (stristr($user_agent, "Android")) ? "fennec-android" : "fennec";
  if (stristr($user_agent, "Android")) $device = "android";
  if (stristr($user_agent, "Android 3")) $device = "android-tablet";
  if (stristr($user_agent, "webOS")) $device = "webos";
