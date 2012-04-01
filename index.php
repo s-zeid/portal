@@ -133,6 +133,9 @@ if (!isset($_GET["css"]) || !trim($_GET["css"]) != "") {
  // Template expansion for config values
  if ($use_templum_for_banner_content)
   $portal["banner"]["content"] = tpl($portal["banner"]["content"], $namespace);
+ if (isset($portal["custom-head-content"]))
+  $portal["custom-head-content"] = tpl($portal["custom-head-content"],
+                                       $namespace);
  if (isset($portal["custom-footer-content"]))
   $portal["custom-footer-content"] = tpl($portal["custom-footer-content"],
                                          $namespace);
@@ -239,6 +242,8 @@ if (!isset($_GET["css"]) || !trim($_GET["css"]) != "") {
    })();
   </script>
 @endif // Google Analytics - New style
+[[if (\$portal["custom-head-content"])
+   echo indent(htmlsymbols(trim(\$portal["custom-head-content"], "\r\n")), 2)."\n";]]
  </head>
  <body id="action_{{\$action}}"[[if (\$mobile || \$device) {
 ]] class="[[if (\$mobile) echo "mobile "; if (\$device) echo "device_\$device";]]"[[

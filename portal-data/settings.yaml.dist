@@ -52,6 +52,10 @@ sites:
 custom-footer-content: |
  <p>Send spam to <a href="mailto:spam@greenmidgetcafe.com">spam@greenmidgetcafe.com</a></p>
 
+# Extra content to put in the HTML head element.  Templum syntax is
+# accepted here.
+custom-head-content: |
+
 # Whether to show W3C Validator links
 # Set to False if you don't want to show them, or if you know that your portal
 # will not validate and you don't want to fix it (although you should)
