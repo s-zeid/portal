@@ -136,9 +136,13 @@ if (!isset($_GET["css"]) || !trim($_GET["css"]) != "") {
  if (isset($portal["custom-head-content"]))
   $portal["custom-head-content"] = tpl($portal["custom-head-content"],
                                        $namespace);
+ else
+  $portal["custom-head-content"] = "";
  if (isset($portal["custom-footer-content"]))
   $portal["custom-footer-content"] = tpl($portal["custom-footer-content"],
                                          $namespace);
+ else
+  $portal["custom-footer-content"] = "";
  if (is_array($portal["sites"])) {
   foreach ($portal["sites"] as $slug => &$site) {
    if (!empty($site["name"]))
