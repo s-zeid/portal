@@ -32,7 +32,8 @@
  * This should be the same on both the filesystem and in URLs.
  * Use "." for the current directory.
  */
-$CONFIG_DIR = "portal-data";
+if (!isset($CONFIG_DIR))
+ $CONFIG_DIR = "portal-data";
 
 // Set to True to get the $portal array when visiting the portal
 // Use only for debugging purposes.
