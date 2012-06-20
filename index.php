@@ -73,7 +73,15 @@ $ga_enabled = !empty($portal["google-analytics"]["account"]) &&
               in_array($portal["google-analytics"]["style"],array("new","old"));
 
 $request_uri = (!empty($_SERVER["REQUEST_URI"])) ? $_SERVER["REQUEST_URI"] : "";
-$url_scheme = (!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] != "off") ? 
+$url_scheme = ((!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] != "off")
+               || (!empty($_SERVER["HTTP_X_FORWARDED_PROTO"])
+                   && $_SERVER["HTTP_X_FORWARDED_PROTO"] == "https")
+               || (!empty($_SERVER["HTTP_X_FORWARDED_PROTOCOL"])
+                   && $_SERVER["HTTP_X_FORWARDED_PROTOCOL"] == "https")
+               || (!empty($_SERVER["HTTP_X_FORWARDED_SSL"])
+                   && $_SERVER["HTTP_X_FORWARDED_SSL"] == "on") 
+               || (!empty($_SERVER["HTTP_FRONT_END_HTTPS"])
+                   && $_SERVER["HTTP_FRONT_END_HTTPS"] == "on")) ? 
               "https" : "http";
 
 // Mobile device detection
