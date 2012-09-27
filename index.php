@@ -406,7 +406,9 @@ HTML
 } // HTML Template
 else {
  /* CSS Template */
- $theme = tpl_r($portal["themes"][$_GET["css"]]);
+ $theme = $portal["themes"][$_GET["css"]];
+ $custom_css = (isset($theme["custom_css"])) ? $theme["custom_css"] : "";
+ $theme = tpl_r($theme);
 
  // Update namespace
  $names = explode(",", "theme");
@@ -653,6 +655,8 @@ img {
 }
 CSS
 , $namespace, False);
+
+if ($custom_css) echo "\n\n".tpl($custom_css, $namespace, False);
 
 } // CSS Template
 
