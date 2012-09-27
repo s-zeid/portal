@@ -96,6 +96,12 @@ openid:
 
 # Themes
 # Templum syntax is accepted here.
+#
+# You can also set an optional "custom_css" key for each theme, which, as
+# its name suggests, lets you add custom CSS to that theme.  The CSS will
+# be addedto the end of the original stylesheet.  Templum is accepted in
+# custom CSS, and you also have access to a $theme array, which contains
+# all of the other settings for the theme.
 themes:
     red:
         bg:          '#636363 url("{{$CONFIG_DIR}}/theme-files/red/background.png") repeat-x fixed'
