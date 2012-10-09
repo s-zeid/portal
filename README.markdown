@@ -1,8 +1,8 @@
 Portal
 ======
 
-Copyright (C) 2006-2011 Scott Zeid  
-https://github.com/scottywz/portal
+Copyright (C) 2006-2012 Scott Zeid  
+http://code.srwz.us/portal
 
 Introduction
 ------------

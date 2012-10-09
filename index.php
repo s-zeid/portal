@@ -2,8 +2,8 @@
  
 /* Portal
  * 
- * Copyright (C) 2006-2011 Scott Zeid
- * https://github.com/scottywz/portal
+ * Copyright (C) 2006-2012 Scott Zeid
+ * http://code.srwz.us/portal
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -178,7 +178,7 @@ if (!isset($_GET["css"]) || !trim($_GET["css"]) != "") {
    Portal
    
    Copyright (C) 2006-2011 Scott Zeid
-   https://github.com/scottywz/portal
+   http://code.srwz.us/portal
    
    Permission is hereby granted, free of charge, to any person obtaining a copy
    of this software and associated documentation files (the "Software"), to deal
@@ -231,7 +231,7 @@ if (!isset($_GET["css"]) || !trim($_GET["css"]) != "") {
 @endif
   <!--/openid-->
 @endif // OpenID
-  <meta name="generator" content="Portal by Scott Zeid; X11 License; https://github.com/scottywz/portal" />
+  <meta name="generator" content="Portal by Scott Zeid; X11 License; http://code.srwz.us/portal" />
   <!--[if lt IE 9]>
    <script type="text/javascript">var IE7_PNG_SUFFIX = ".png";</script>
    <script defer="defer" type="text/javascript" src="{{\$CONFIG_DIR}}/IE9.js"></script>
@@ -367,7 +367,7 @@ foreach (\$portal["sites"] as \$slug => &\$site) {
   </div>
   <div id="footer" class="footer[[if (\$small) echo " small";]]">
    <p>
-    <a href="https://github.com/scottywz/portal">Portal software</a>
+    <a href="http://code.srwz.us/portal">Portal software</a>
     copyright &copy; [[echo copyright_year(2006);]] <a href="http://srwz.us/">Scott Zeid</a>.
    </p>
 [[if (\$portal["custom-footer-content"])
@@ -421,8 +421,8 @@ else {
  echo tpl(<<<CSS
 /* Portal
  * 
- * Copyright (C) 2006-2011 Scott Zeid
- * https://github.com/scottywz/portal
+ * Copyright (C) 2006-2012 Scott Zeid
+ * http://code.srwz.us/portal
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
