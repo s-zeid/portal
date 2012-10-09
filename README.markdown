@@ -30,7 +30,8 @@ To install Portal:
 1. Copy `index.php` and `portal-data` to your document root or whatever folder
    you want to install it in.
 2. Rename `portal-data/settings.yaml.dist` to `portal-data/settings.yaml`.
-3. Edit that file to change the settings and add sites.
+3. Edit that file to change the settings and add sites.  (Documentation for
+   `settings.yaml` is contained within itself.)
 4. Add icons to `portal-data/icons` and `portal-data/icons/small`.
    Corresponding icons in both folders should have the same file names.  Icons
    in `portal-data/icons` should be 32x32 pixels in size, and icons in

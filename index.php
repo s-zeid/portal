@@ -154,10 +154,11 @@ if (!isset($_GET["css"]) || !trim($_GET["css"]) != "") {
   $portal["custom-footer-content"] = "";
  if (is_array($portal["sites"])) {
   foreach ($portal["sites"] as $slug => &$site) {
-   if (!empty($site["name"]))
-    $site["name"] = tpl($site["name"], $namespace);
-   if (!empty($site["desc"]))
-    $site["desc"] = tpl($site["desc"], $namespace);
+   $keys = array("name", "icon", "url", "desc");
+   foreach ($keys as $key) {
+    if (!empty($site[$key]))
+     $site[$key] = tpl($site[$key], $namespace);
+   }
   }
  }
  

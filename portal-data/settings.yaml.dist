@@ -31,13 +31,15 @@ banner:
  # text.
  content: 
 
-# Sites you want to link to
+# Sites you want to link to.  All fields except index and minibar accept Templum
+# syntax.
+#
 # Format:
 #     machine-readable-name--only-letters-numbers-underscores-and-hyphens:
-#         name: Name you want visitors to see; accepts Templum syntax
+#         name: Name you want visitors to see
 #         icon: Icon filename under $CONFIG_DIR/icons & $CONFIG_DIR/icons/small
 #         url:  URL of the site
-#         desc: Optional text description; accepts Templum syntax
+#         desc: Optional text description
 #         index: Set to False to hide in the main list; leave out otherwise
 #         minibar: Set to False to hide in the minibar list; leave out otherwise
 sites:
