@@ -2,7 +2,7 @@ Portal
 ======
 
 Copyright (C) 2006-2012 Scott Zeid  
-http://code.srwz.us/portal
+[http://code.srwz.us/portal](http://code.srwz.us/portal)
 
 Introduction
 ------------
@@ -19,8 +19,9 @@ a personal home page, for example.  Here are some features of Portal:
 * Validates as HTML 5 and CSS 3.
 * Free, open source software released under the X11 License.
 
-To see a live example of Portal, go to http://srwz.us/.  You may also [look at
-its configuration file](http://srwz.us/portal-data/settings.yaml).
+To see a live example of Portal, go to [http://srwz.us/](http://srwz.us/).
+You may also [look at its configuration
+file](http://srwz.us/portal-data/settings.yaml).
 
 Installation
 ------------
