@@ -130,6 +130,8 @@ if (!isset($_GET["css"]) || !trim($_GET["css"]) != "") {
  if ($_403 || $_404) {
   $action = "error";
   $request_uri = $portal["url"];
+  if      ($_403) header("HTTP/1.0 403 Forbidden");
+  else if ($_404) header("HTTP/1.0 404 Not Found");
  }
  
  // Update namespace
