@@ -41,6 +41,11 @@ $debug = False;
 
 ////////////////////////////////////////////////////////////////////////////////
 
+// Workaround for templates raising fatal errors in PHP >= 5.4.0 when
+// date.timezone is not set.  If that is the case, then this line will
+// raise a warning.
+date_default_timezone_set(date_default_timezone_get());
+
 require "$CONFIG_DIR/lib/is_mobile.php";
 require "$CONFIG_DIR/lib/spyc.php";
 require "$CONFIG_DIR/lib/templum_php5.php";
