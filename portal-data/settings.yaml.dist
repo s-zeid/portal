@@ -46,7 +46,7 @@ sites:
     scott-zeid:
         name: Scott Zeid
         icon: scottywz.png
-        url:  http://srwz.us/
+        url:  http://s.zeid.me/
         desc: This <del>really cool person</del> f***ing narcissist who made this portal software
 
 # Extra content to put in the footer.  This can be disclaimers, contact info,
