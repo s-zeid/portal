@@ -1,7 +1,7 @@
 # Variables that accept Templum syntax may use the following variables:
 # $action, $CONFIG_DIR, $device, $ga_enabled, $highlight (minibar only),
 # $minibar, $mobile, $name, $narrow, $openid_enabled, $orientation (minibar
-# only), $portal, $request_uri, $small, $theme, $url_scheme
+# only), $portal, $request_uri, $small, $theme, $url_scheme, $url_root
 # $portal is the values in this file after processing.
 #
 # If a string value starts with a { or [ (Templum special characters), then
@@ -10,8 +10,12 @@
 
 # Name of your portal
 name: B. Nay (b. 1992)
-# Main URL of your portal (used in the top banner); defaults to request URL
+# Preferred URL for your portal (used in the top banner);
+# defaults to script path / $PHP_SELF
 url:  http://bnay.example/
+# Root URL to use in absolute URLs (you should only need to change this if
+# the automatic detection does not work).  $CONFIG_DIR should be in here.
+# url-root: http://bnay.example/
 
 # Default theme name (see the "themes" key)
 theme: red

@@ -3,7 +3,7 @@
 /* Portal
  * 
  * Copyright (C) 2006-2012 Scott Zeid
- * http://code.srwz.us/portal
+ * http://code.s.zeid.me/portal
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,7 @@
  * other dealings in this Software without prior written authorization.
  */
 
-/* Relative or absolute path to the settings folder; default is "portal-data"
+/* Relative path to the settings folder; default is "portal-data".
  * This should be the same on both the filesystem and in URLs.
  * Use "." for the current directory.
  */
@@ -88,6 +88,13 @@ $url_scheme = ((!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] != "off")
                || (!empty($_SERVER["HTTP_FRONT_END_HTTPS"])
                    && $_SERVER["HTTP_FRONT_END_HTTPS"] == "on")) ? 
               "https" : "http";
+if (!empty($portal["url-root"]))
+ $url_root = $portal["url-root"] = rtrim($portal["url-root"], "/");
+else {
+ $url_root = "$url_scheme://{$_SERVER["HTTP_HOST"]}";
+ $url_root .= implode("/",explode("/", $_SERVER["PHP_SELF"], -1));
+ $portal["url-root"] = $url_root;
+}
 
 // Mobile device detection
 $mobile = is_mobile(False, True);
@@ -107,7 +114,58 @@ if ($debug) {
  exit();
 }
 
-if (!isset($_GET["css"]) || !trim($_GET["css"]) != "") {
+if (isset($_GET["json"])) {
+ /* JSON output */
+ // Update namespace
+ $names = explode(",", "_403,_404,action,highlight,minibar,narrow,orientation,"
+           ."request_uri,small,target,theme,url_root");
+ foreach ($names as $n) {
+  $namespace[$n] = &$$n;
+ }
+ if ($use_templum_for_banner_content)
+  $portal["banner"]["content"] = tpl($portal["banner"]["content"], $namespace);
+ if (is_array($portal["sites"])) {
+  foreach ($portal["sites"] as $slug => &$site) {
+   $keys = array("name", "icon", "url", "desc");
+   foreach ($keys as $key) {
+    if (!empty($site[$key])) {
+     $site[$key] = $v = tpl($site[$key], $namespace);
+     if ($key == "url") {
+      if (strpos($v, "/") === 0 && strpos($v, "//") !== 0)
+       $site[$key] = $v = "$url_scheme://{$_SERVER["HTTP_HOST"]}/$v";
+     }
+     if ($key == "icon") {
+      if (preg_match("/(((http|ftp)s|file|data)?\:|\/\/)/i", $v))
+       $site[$key] = $v = array("large" => $v, "small" => $v);
+      else if (strpos($v, "/") === 0) {
+       $v = "$url_scheme://{$_SERVER["HTTP_HOST"]}/$v";
+       $site[$key] = $v = array("large" => $v, "small" => $v);
+      } else {
+       $site[$key] = $v = array(
+        "large" => $url_root."/$CONFIG_DIR/icons/".$v,
+        "small" => $url_root."/$CONFIG_DIR/icons/small/".$v
+       );
+      }
+     }
+    }
+   }
+  }
+ }
+ header("Content-Type: application/json; charset=utf-8");
+ $data = array(
+  "name"       => $portal["name"],
+  "url"        => $portal["url"],
+  "url-root"   => $portal["url-root"],
+  "config-dir" => $CONFIG_DIR,
+  "banner"     => $portal["banner"],
+  "sites"      => $portal["sites"]
+ );
+ if (defined("JSON_PRETTY_PRINT") && defined("JSON_UNESCAPED_SLASHES"))
+  echo json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+ else
+  echo json_encode($data);
+} // JSON output
+else if (!isset($_GET["css"]) || !trim($_GET["css"]) != "") {
  /* HTML Template */
  
  $action = "index";
@@ -141,7 +199,7 @@ if (!isset($_GET["css"]) || !trim($_GET["css"]) != "") {
  
  // Update namespace
  $names = explode(",", "_403,_404,action,highlight,minibar,narrow,orientation,"
-           ."request_uri,small,target,theme");
+           ."request_uri,small,target,theme,url_root");
  foreach ($names as $n) {
   $namespace[$n] = &$$n;
  }
@@ -216,11 +274,7 @@ if (!isset($_GET["css"]) || !trim($_GET["css"]) != "") {
   <link rel="shortcut icon" type="image/png" href="{{\$CONFIG_DIR}}/favicon.png" />
 @endif
 @if (\$_403 || \$_404):
-@if (stripos(rtrim(\$request_uri, "/"), ".php") == strlen(rtrim(\$request_uri, "/")) - 4):
-  <base href="{{implode("/",explode("/", rtrim(\$request_uri, "/"), -1))}}/" />
-@else:
-  <base href="{{rtrim(\$request_uri, "/")}}/" />
-@endif
+  <base href="{{\$url_root}}/" />
 @endif
 @if (\$openid_enabled):
 @ /* OpenID */
@@ -290,13 +344,20 @@ foreach (\$portal["sites"] as \$slug => &\$site) {
   \$code .= " title=\"".\$name;
   // Site description
   if (isset(\$site["desc"]) && trim(\$site["desc"])) {
-   \$desc = str_replace("\n", " ", htmlentitiesu8(strip_tags(\$site["desc"]), False));
+   \$desc = str_replace("\n", "&#x0a;",
+                        htmlentitiesu8(strip_tags(\$site["desc"]), False));
    \$desc = str_replace("&amp;", "&", \$desc);
    \$code .= " &mdash; ".\$desc;
   }
   // Icon
-  \$code .= "\"><img src=\"\$CONFIG_DIR/icons/small/".htmlentitiesu8(\$site["icon"], True)."\"";
-  \$code .= " alt=\"Icon\" /></a>";
+  \$icon_url = htmlentitiesu8(\$site["icon"], True);
+  if (preg_match("/(((http|ftp)s|file|data)?\:|\/\/)/i", \$site["icon"]))
+   \$icon_url = \$icon_url;
+  else if (strpos(\$site["icon"], "/") === 0)
+   \$icon_url = "\$url_scheme://{\$_SERVER["HTTP_HOST"]}/\$icon_url";
+  else
+   \$icon_url = "\$CONFIG_DIR/icons/small/\$icon_url";
+  \$code .= "\"><img src=\"\$icon_url\" alt=\"Icon\" /></a>";
   if (\$orientation == "vertical") \$code .= "</div>";
   echo \$code;
  }
@@ -355,14 +416,20 @@ foreach (\$portal["sites"] as \$slug => &\$site) {
   } else
    \$code .= " <span>\n";
   // Image
-  \$code .= "  <span><img src=\"\$CONFIG_DIR/icons";
-  if (\$small) \$code .= "/small";
-  \$code .= "/".htmlentitiesu8(\$site["icon"], True)."\" alt=\" \" />";
+  \$icon_url = htmlentitiesu8(\$site["icon"], True);
+  if (preg_match("/(((http|ftp)s|file|data)?\:|\/\/)/i", \$site["icon"]))
+   \$icon_url = \$icon_url;
+  else if (strpos(\$site["icon"], "/") === 0)
+   \$icon_url = "\$url_scheme://{\$_SERVER["HTTP_HOST"]}/\$icon_url";
+  else
+   \$icon_url = "\$CONFIG_DIR/icons".((\$small)?"/small":"")."/\$icon_url";
+  \$code .= "  <span><img src=\"\$icon_url\" alt=\" \" />";
   // Site name
   \$code .= "<strong class=\"name\">".htmlsymbols(\$site["name"])."</strong></span>";
   // Site description
   if (isset(\$site["desc"]) && trim(\$site["desc"]))
-   \$code .= "<br />\n  <span class=\"desc\">".htmlsymbols(\$site["desc"])."</span>";
+   \$code .= "<br />\n  <span class=\"desc\">";
+   \$code .= str_replace("\n", "&#x0a;", htmlsymbols(\$site["desc"]))."</span>";
   // Close stuff
   \$code .= "\n ".((!empty(\$site["url"])) ? "</a>" : "</span>")."\n</p>";
   echo indent(\$code, 3);

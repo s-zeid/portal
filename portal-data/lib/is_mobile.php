@@ -1,9 +1,9 @@
 <?php
 
 /* is_mobile()
- * Shitty mobile device detection based on the user agent.
+ * Shitty mobile device detection based on shitty user agent strings.
  * 
- * Copyright (C) 2009-2011 Scott Zeid
+ * Copyright (C) 2009-2012 Scott Zeid
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -39,16 +39,18 @@
  * 
  * device=[...] takes precedence over mobile=[...].
  * 
- * Valid device types are android, android-tablet, fennec, fennec-android,
- * webos, unknown, tablet, apple, and apple-tablet.  Devices running Android
- * (Honeycomb) and iPads are not considered to be mobile devices, but this
- * function will still return "android-tablet" or "apple-tablet" as the device
- * name, respectively.  Support for Android 4.x (Ice Cream Sandwich) tablets
- * and the HP Touchpad may be added in the future; the device name for the
- * Touchpad would be "webos-tablet".  If the user is running Firefox Mobile,
- * the device type will be "fennec" or "fennec-android".  Tablet detection is
- * currently not supported for Firefox Mobile as tablet status is not present
- * in its UA string.
+ * Valid device types are firefox-tablet, firefox, chrome-tablet, chrome,
+ * android-tablet, android, webos, tablet, unknown, apple, and apple-tablet
+ * (listed in descending order of the author's personal preference).  Android
+ * tablets and iPads are not considered to be mobile devices, but is_mobile()
+ * will still return a device name ending in "-tablet", as appropriate for the
+ * device in question.
+ *
+ * If the user is running Firefox Mobile, the device name would be "firefox",
+ * or "firefox-tablet" if it is a tablet.  The same is true for users using
+ * Chrome, except (obviously) "firefox" would be replaced with "chrome".
+ * Although it has been discontinued for a while, support for the HP Touchpad
+ * may be added in the future; its device name would be "webos-tablet".
  * 
  * @param bool $return_device Return a string representing the type of device.
  * @param bool $use_get Allow overriding default behavior using query strings.
@@ -77,24 +79,37 @@ function is_mobile($return_device = False, $use_get = True) {
  }
  # is mobile device?
  if (((
-    stristr($user_agent, "iPhone") || stristr($user_agent, "iPod") ||
-    (stristr($user_agent, "Android") && !stristr($user_agent, "Android 3")) ||
-    stristr($user_agent, "webOS") || stristr($user_agent, "Fennec")
-   ) && $nomobile == False) || $forcemobile == True)
+     (stristr($user_agent, "Android") && !stristr($user_agent, "Android 3.") &&
+      stristr($user_agent, "Mobile")) ||
+     stristr($user_agent, "webOS") ||
+     ((stristr($user_agent, "Firefox") || stristr($user_agent, "Fennec")) &&
+      stristr($user_agent, "Mobile")) ||
+     stristr($user_agent, "iPhone") || stristr($user_agent, "iPod")
+    ) && !stristr($user_agent, "Tablet") && $nomobile == False) ||
+   $forcemobile == True)
   $mobile = True;
  else
   $mobile = False;
  # which mobile device
  $device = "unknown";
+ if (stristr($user_agent, "Android")) {
+  if (!stristr($user_agent, "Mobile") || stristr($user_agent, "Android 3."))
+   $device = "android-tablet";
+  else $device = "android";
+  if (stristr($user_agent, "Chrome"))
+   $device = str_replace("android", "chrome", $device);
+ }
+ if (stristr($user_agent, "Firefox") || stristr($user_agent, "Fennec")) {
+  if (stristr($user_agent, "Tablet")) $device = "firefox-tablet";
+  else $device = "firefox";
+ }
+ if (stristr($user_agent, "webOS")) $device = "webos";
  if (stristr($user_agent, "iPhone") || stristr($user_agent, "iPod"))
   $device = "apple";
  if (stristr($user_agent, "iPad")) $device = "apple-tablet";
- if (stristr($user_agent, "Fennec"))
-  $device = (stristr($user_agent, "Android")) ? "fennec-android" : "fennec";
- if (stristr($user_agent, "Android")) $device = "android";
- if (stristr($user_agent, "Android 3")) $device = "android-tablet";
- if (stristr($user_agent, "webOS")) $device = "webos";
  if ($forcedevice != "") $device = $forcedevice;
+ if (stristr($forcedevice, "fennec"))
+  $device = str_replace("fennec", "firefox", $device);
  if ($forcedevice == "iphone" || $forcedevice == "ipod") $device = "apple";
  if (stristr($forcedevice, "ipad")) $device = "apple-tablet";
  if (((!$mobile && !$forcemobile) || $nomobile || $forcedevice === "") &&
