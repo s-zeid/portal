@@ -427,9 +427,10 @@ foreach (\$portal["sites"] as \$slug => &\$site) {
   // Site name
   \$code .= "<strong class=\"name\">".htmlsymbols(\$site["name"])."</strong></span>";
   // Site description
-  if (isset(\$site["desc"]) && trim(\$site["desc"]))
+  if (isset(\$site["desc"]) && trim(\$site["desc"])) {
    \$code .= "<br />\n  <span class=\"desc\">";
    \$code .= str_replace("\n", "&#x0a;", htmlsymbols(\$site["desc"]))."</span>";
+  }
   // Close stuff
   \$code .= "\n ".((!empty(\$site["url"])) ? "</a>" : "</span>")."\n</p>";
   echo indent(\$code, 3);
