@@ -58,6 +58,7 @@ Portal supports the following query string parameters:
 * `theme` - use the specified theme name (must be a key in `settings.yaml` >
             `themes`)
 * `403`, `404` - causes Portal to render a 403 or 404 error page
+* `json` - output a JSON object instead of HTML
 
 OpenID support
 --------------
