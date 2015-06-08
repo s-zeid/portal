@@ -444,7 +444,7 @@ foreach (\$portal["sites"] as \$slug => &\$site) {
   <div id="footer" class="footer[[if (\$small) echo " small";]]">
    <p>
     <a href="http://code.s.zeid.me/portal">Portal software</a>
-    copyright &copy; [[echo copyright_year(2006);]] <a href="http://s.zeid.me/">Scott Zeid</a>.
+    copyright &copy; [[echo copyright_year(2006);]] <a href="https://s.zeid.me/">Scott Zeid</a>.
    </p>
 [[if (\$portal["custom-footer-content"])
    echo indent(htmlsymbols(trim(\$portal["custom-footer-content"], "\r\n")), 3)."\n";]]
