@@ -443,7 +443,7 @@ foreach (\$portal["sites"] as \$slug => &\$site) {
   </div>
   <div id="footer" class="footer[[if (\$small) echo " small";]]">
    <p>
-    <a href="http://code.srwz.us/portal">Portal software</a>
+    <a href="http://code.s.zeid.me/portal">Portal software</a>
     copyright &copy; [[echo copyright_year(2006);]] <a href="http://s.zeid.me/">Scott Zeid</a>.
    </p>
 [[if (\$portal["custom-footer-content"])
