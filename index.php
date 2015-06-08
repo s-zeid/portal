@@ -2,7 +2,7 @@
  
 /* Portal
  * 
- * Copyright (C) 2006-2012 Scott Zeid
+ * Copyright (C) 2006-2015 Scott Zeid
  * http://code.s.zeid.me/portal
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -243,7 +243,7 @@ else if (!isset($_GET["css"]) || !trim($_GET["css"]) != "") {
   
    Portal
    
-   Copyright (C) 2006-2011 Scott Zeid
+   Copyright (C) 2006-2015 Scott Zeid
    http://code.srwz.us/portal
    
    Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -497,7 +497,7 @@ else {
  echo tpl(<<<CSS
 /* Portal
  * 
- * Copyright (C) 2006-2012 Scott Zeid
+ * Copyright (C) 2006-2015 Scott Zeid
  * http://code.srwz.us/portal
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy

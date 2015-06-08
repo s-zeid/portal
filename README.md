@@ -1,7 +1,7 @@
 Portal
 ======
 
-Copyright (C) 2006-2012 Scott Zeid  
+Copyright (C) 2006-2015 Scott Zeid  
 [http://code.s.zeid.me/portal](http://code.s.zeid.me/portal)
 
 Introduction
