@@ -2,7 +2,7 @@ Portal
 ======
 
 Copyright (C) 2006-2015 Scott Zeid  
-[http://code.s.zeid.me/portal](http://code.s.zeid.me/portal)
+<https://code.s.zeid.me/portal>
 
 Introduction
 ------------
@@ -19,9 +19,9 @@ a personal home page, for example.  Here are some features of Portal:
 * Validates as HTML 5 and CSS 3.
 * Free, open source software released under the X11 License.
 
-To see a live example of Portal, go to <http://more.s.zeid.me/>.
+To see a live example of Portal, go to <https://more.s.zeid.me/>.
 You may also [look at its configuration
-file](http://more.s.zeid.me/portal-data/settings.yaml).
+file](https://more.s.zeid.me/portal-data/settings.yaml).
 
 Installation
 ------------

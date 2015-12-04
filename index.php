@@ -3,7 +3,7 @@
 /* Portal
  * 
  * Copyright (C) 2006-2015 Scott Zeid
- * http://code.s.zeid.me/portal
+ * https://code.s.zeid.me/portal
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -443,7 +443,7 @@ foreach (\$portal["sites"] as \$slug => &\$site) {
   </div>
   <div id="footer" class="footer[[if (\$small) echo " small";]]">
    <p>
-    <a href="http://code.s.zeid.me/portal">Portal software</a>
+    <a href="https://code.s.zeid.me/portal">Portal software</a>
     copyright &copy; [[echo copyright_year(2006);]] <a href="https://s.zeid.me/">Scott Zeid</a>.
    </p>
 [[if (\$portal["custom-footer-content"])
