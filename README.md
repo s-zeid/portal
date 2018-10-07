@@ -1,8 +1,9 @@
 Portal
 ======
 
-Copyright (C) 2006-2015 Scott Zeid  
+Copyright (C) 2006-2018 Scott Zeid  
 <https://code.s.zeid.me/portal>
+
 
 Introduction
 ------------
@@ -23,6 +24,7 @@ To see a live example of Portal, go to <https://more.s.zeid.me/>.
 You may also [look at its configuration
 file](https://more.s.zeid.me/portal-data/settings.yaml).
 
+
 Installation
 ------------
 To install Portal:
@@ -42,6 +44,14 @@ To install Portal:
 If you want to change the name or location of portal-data, you will also need
 to update the `$CONFIG_DIR` variable in index.php accordingly.
 
+
+Building from source
+--------------------
+A pre-compiled script exists at `index.php`.  If you wish to modify Portal,
+you will need to change `src/portal.php` and then re-compile by running `make`
+from the root of the repository.  GNU make is required for this.
+
+
 Query string parameters
 -----------------------
 Portal supports the following query string parameters:
@@ -60,43 +70,6 @@ Portal supports the following query string parameters:
 * `403`, `404` - causes Portal to render a 403 or 404 error page
 * `json` - output a JSON object instead of HTML
 
-OpenID support
---------------
-If you use OpenID and your provider allows you to, you can use your Portal's
-URL as an alias for your OpenID.  To set this up, you would look in your OpenID
-provider's help pages for something that looks like "Use your own URL", and
-then look for some HTML code that looks something like this:
-
-    <link rel="openid.server" href="http://www.myopenid.com/server" />
-    <link rel="openid.delegate" href="http://youraccount.myopenid.com/" />
-    <link rel="openid2.local_id" href="http://youraccount.myopenid.com" />
-    <link rel="openid2.provider" href="http://www.myopenid.com/server" />
-    <meta http-equiv="X-XRDS-Location"
-     content="http://www.myopenid.com/xrds?username=youraccount.myopenid.com" />
-
-Then you would copy the URLs from that code and paste them into the respective
-keys in `settings.yaml` > `openid`.  You can omit either `provider` and
-`local_id` or `server` and `delegate` if your provider does not give you those
-URLs.  However, `server` and `provider` are often the same, as are `delegate`
-and `local_id`.
-
-For example:
-
-    openid:
-        # OpenID server URL
-        server:   http://www.myopenid.com/server
-        # OpenID provider URL
-        provider: http://www.myopenid.com/server
-        # Delegate URL
-        delegate: http://youraccount.myopenid.com/
-        # Local ID URL
-        local_id: http://youraccount.myopenid.com
-        # XRDS URL
-        xrds:     http://www.myopenid.com/xrds?username=youraccount.myopenid.com
-
-Note that Portal sends the `X-XRDS-Location` URL as an actual HTTP header, and
-not a meta tag, because the latter would prevent Portal from validating as
-HTML5.
 
 Minibar
 -------
@@ -147,3 +120,42 @@ If you want the site to appear in the minibar but not the main page, add this:
 You can also add both lines if you want to completely hide the site from your
 Portal.  If the URL is not set, then the site will automatically be hidden from
 the minibar.
+
+
+OpenID support
+--------------
+If you use OpenID and your provider allows you to, you can use your Portal's
+URL as an alias for your OpenID.  To set this up, you would look in your OpenID
+provider's help pages for something that looks like "Use your own URL", and
+then look for some HTML code that looks something like this:
+
+    <link rel="openid.server" href="http://www.myopenid.com/server" />
+    <link rel="openid.delegate" href="http://youraccount.myopenid.com/" />
+    <link rel="openid2.local_id" href="http://youraccount.myopenid.com" />
+    <link rel="openid2.provider" href="http://www.myopenid.com/server" />
+    <meta http-equiv="X-XRDS-Location"
+     content="http://www.myopenid.com/xrds?username=youraccount.myopenid.com" />
+
+Then you would copy the URLs from that code and paste them into the respective
+keys in `settings.yaml` > `openid`.  You can omit either `provider` and
+`local_id` or `server` and `delegate` if your provider does not give you those
+URLs.  However, `server` and `provider` are often the same, as are `delegate`
+and `local_id`.
+
+For example:
+
+    openid:
+        # OpenID server URL
+        server:   http://www.myopenid.com/server
+        # OpenID provider URL
+        provider: http://www.myopenid.com/server
+        # Delegate URL
+        delegate: http://youraccount.myopenid.com/
+        # Local ID URL
+        local_id: http://youraccount.myopenid.com
+        # XRDS URL
+        xrds:     http://www.myopenid.com/xrds?username=youraccount.myopenid.com
+
+Note that Portal sends the `X-XRDS-Location` URL as an actual HTTP header, and
+not a meta tag, because the latter would prevent Portal from validating as
+HTML5.
