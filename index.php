@@ -1759,14 +1759,33 @@ else if (!isset($_GET["css"]) || !trim($_GET["css"]) != "") {
                                          $namespace);
  else
   $portal["custom-footer-content"] = "";
+ 
+ $any_icons = false;
  if (is_array($portal["sites"])) {
   foreach ($portal["sites"] as $slug => &$site) {
    $keys = array("name", "icon", "url", "desc");
+   if (!empty($site["icon"]))
+    $any_icons = true;
    foreach ($keys as $key) {
     if (!empty($site[$key]))
      $site[$key] = tpl($site[$key], $namespace);
    }
   }
+ }
+ 
+ $div_body_classes = "";
+ if ($narrow)
+  $div_body_classes .= " narrow";
+ if ($small)
+  $div_body_classes .= " small";
+ if ($any_icons)
+  $div_body_classes .= " any-icons";
+ $div_body_classes = trim($div_body_classes);
+ 
+ // Update namespace
+ $names = explode(",", "any_icons,div_body_classes");
+ foreach ($names as $n) {
+  $namespace[$n] = &$$n;
  }
  
  // Yadis XRDS header; needs to be sent as a proper header instead of a meta
@@ -1928,9 +1947,8 @@ foreach (\$portal["sites"] as \$slug => &\$site) {
    </h1>
   </div>
 @endif // Banner
-  <div id="body"[[if (\$narrow || \$small) {
-]] class="[[if (\$narrow) echo "narrow"; if (\$narrow && \$small) echo " ";
-            if (\$small) echo "small";]]"[[
+  <div id="body"[[if (\$div_body_classes) {
+]] class="[[echo "\$div_body_classes";]]"[[
 }]]>
 @if (\$_403):
    <p>You don't have permission to view this page.</p>
@@ -1943,7 +1961,11 @@ foreach (\$portal["sites"] as \$slug => &\$site) {
 foreach (\$portal["sites"] as \$slug => &\$site) {
  if (!isset(\$site["index"]) || \$site["index"] !== False) {
   \$code = "";
-  \$code .= "<p class=\"site".((!empty(\$site["url"]))?" has-url":"")."\">\n";
+  \$code .= "<p class=\"site";
+  if (!empty(\$site["url"])) \$code .= " has-url";
+  if (empty(\$site["name"])) \$code .= " no-name";
+  if (empty(\$site["icon"])) \$code .= " no-icon";
+  \$code .= "\">\n";
   // Link
   if (!empty(\$site["url"])) {
    \$code .= " <a href=\"".htmlentitiesu8(\$site["url"], True)."\"";
@@ -1953,16 +1975,22 @@ foreach (\$portal["sites"] as \$slug => &\$site) {
   } else
    \$code .= " <span>\n";
   // Image
-  \$icon_url = htmlentitiesu8(\$site["icon"], True);
-  if (preg_match("/(((http|ftp)s|file|data)?\:|\/\/)/i", \$site["icon"]))
-   \$icon_url = \$icon_url;
-  else if (strpos(\$site["icon"], "/") === 0)
-   \$icon_url = "\$url_scheme://{\$_SERVER["HTTP_HOST"]}/\$icon_url";
-  else
-   \$icon_url = "\$CONFIG_DIR/icons".((\$small)?"/small":"")."/\$icon_url";
-  \$code .= "  <span><img src=\"\$icon_url\" alt=\" \" />";
+  if (!empty(\$site["icon"])) {
+   \$icon_url = htmlentitiesu8(\$site["icon"], True);
+   if (preg_match("/(((http|ftp)s|file|data)?\:|\/\/)/i", \$site["icon"]))
+    \$icon_url = \$icon_url;
+   else if (strpos(\$site["icon"], "/") === 0)
+    \$icon_url = "\$url_scheme://{\$_SERVER["HTTP_HOST"]}/\$icon_url";
+   else
+    \$icon_url = "\$CONFIG_DIR/icons".((\$small)?"/small":"")."/\$icon_url";
+   \$code .= "  <span><img src=\"\$icon_url\" alt=\" \" />";
+  } else
+   \$code .= "  <span>";
   // Site name
-  \$code .= "<strong class=\"name\">".htmlsymbols(\$site["name"])."</strong></span>";
+  if (isset(\$site["name"]) && trim(\$site["name"])) {
+   \$code .= "<strong class=\"name\">".htmlsymbols(\$site["name"])."</strong>";
+  }
+  \$code .= "</span>";
   // Site description
   if (isset(\$site["desc"]) && trim(\$site["desc"])) {
    \$code .= "<br />\n  <span class=\"desc\">";
@@ -2152,6 +2180,18 @@ img {
    width: 16px; height: 16px;
    margin: 6px;
   }
+  .site.no-icon .name {
+   margin-left: 15px;
+  }
+  .any-icons .site.no-icon .name {
+   margin-left: 52px;
+  }
+  .small .site.no-icon .name {
+   margin-left: 9px;
+  }
+  .small.any-icons .site.no-icon .name {
+   margin-left: 28px;
+  }
   .site .name {
    display: inline-block;
    width: 436px;
@@ -2172,13 +2212,22 @@ img {
   }
   .site .desc {
    display: block;
-   margin-left: 52px; margin-right: 12px;
+   margin-left: 15px; margin-right: 12px;
    padding-bottom: 12px;
    text-align: justify;
   }
+  .site.no-name .desc {
+   margin-top: -0.375em;
+  }
+  .any-icons .site .desc {
+   margin-left: 52px;
+  }
   .small .site .desc {
-   margin-left: 28px; margin-right: 8px;
+   margin-left: 9px; margin-right: 8px;
    padding-bottom: 8px;
+  }
+  .small.any-icons .site .desc {
+   margin-left: 28px;
   }
 #footer {
  font-size: .6em;
@@ -2213,6 +2262,12 @@ img {
   .mobile .small .site img {
    width: 24px; height: 24px;
   }
+  .mobile .any-icons .site.no-icon .name {
+   margin-left: 68px;
+  }
+  .mobile .small.any-icons .site.no-icon .name {
+   margin-left: 36px;
+  }
   .mobile .site .name {
    width: 396px;
   }
@@ -2225,10 +2280,13 @@ img {
   .mobile .narrow.small .site .name {
    width: 186px;
   }
-  .mobile .site .desc {
+  .mobile .site.no-name .desc {
+   margin-top: -0.625em;
+  }
+  .mobile .any-icons .site .desc {
    margin-left: 68px;
   }
-  .mobile .small .site .desc {
+  .mobile .any-icons.small .site .desc {
    margin-left: 36px;
   }
   .mobile .button_80x15 {
