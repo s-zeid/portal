@@ -53,6 +53,7 @@ date_default_timezone_set(date_default_timezone_get());
 require("../lib/spyc.php");
 require("../lib/templum_php5.php");
 require("../src/is_mobile.php");
+require("../src/qmark_icon.php");
 
 // Configuration loading and sanitation  {{{1
 $portal = spyc_load(
@@ -269,7 +270,7 @@ else if (!isset($_GET["css"]) || !trim($_GET["css"]) != "") {
    Portal
    
    Copyright (C) 2006-2018 Scott Zeid
-   http://code.srwz.us/portal
+   https://code.s.zeid.me/portal
    
    Permission is hereby granted, free of charge, to any person obtaining a copy
    of this software and associated documentation files (the "Software"), to deal
@@ -318,7 +319,7 @@ else if (!isset($_GET["css"]) || !trim($_GET["css"]) != "") {
 @endif
   <!--/openid-->
 @endif // OpenID
-  <meta name="generator" content="Portal by Scott Zeid; X11 License; http://code.srwz.us/portal" />
+  <meta name="generator" content="Portal by Scott Zeid; X11 License; https://code.s.zeid.me/portal" />
   <link rel="stylesheet" type="text/css" href="{{\$url_scheme}}://fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold,bolditalic" />
   <link rel="stylesheet" type="text/css" href="?css={{\$theme}}&amp;.css" />
 @if (\$mobile):
@@ -359,8 +360,12 @@ foreach (\$portal["sites"] as \$slug => &\$site) {
   // Highlight
   if (\$highlight == \$slug) \$code .= ' class="highlight"';
   // Site name
-  \$name = str_replace("\n", " ", htmlentitiesu8(strip_tags(\$site["name"]), False));
-  \$name = str_replace("&amp;", "&", \$name);
+  if (!empty(\$site["name"])) {
+   \$name = str_replace("\n", " ", htmlentitiesu8(strip_tags(\$site["name"]), False));
+   \$name = str_replace("&amp;", "&", \$name);
+  } else {
+   \$name = htmlentitiesu8(\$site["url"], True);
+  }
   \$code .= " title=\"".\$name;
   // Site description
   if (isset(\$site["desc"]) && trim(\$site["desc"])) {
@@ -370,14 +375,19 @@ foreach (\$portal["sites"] as \$slug => &\$site) {
    \$code .= " &mdash; ".\$desc;
   }
   // Icon
-  \$icon_url = htmlentitiesu8(\$site["icon"], True);
-  if (preg_match("/(((http|ftp)s|file|data)?\:|\/\/)/i", \$site["icon"]))
-   \$icon_url = \$icon_url;
-  else if (strpos(\$site["icon"], "/") === 0)
-   \$icon_url = "\$url_scheme://{\$_SERVER["HTTP_HOST"]}/\$icon_url";
-  else
-   \$icon_url = "\$CONFIG_DIR/icons/small/\$icon_url";
-  \$code .= "\"><img src=\"\$icon_url\" alt=\"Icon\" /></a>";
+  if (!empty(\$site["icon"])) {
+   \$icon_url = htmlentitiesu8(\$site["icon"], True);
+   if (preg_match("/(((http|ftp)s|file|data)?\:|\/\/)/i", \$site["icon"]))
+    \$icon_url = \$icon_url;
+   else if (strpos(\$site["icon"], "/") === 0)
+    \$icon_url = "\$url_scheme://{\$_SERVER["HTTP_HOST"]}/\$icon_url";
+   else
+    \$icon_url = "\$CONFIG_DIR/icons/small/\$icon_url";
+   \$code .= "\"><img src=\"\$icon_url\" alt=\"Icon\" /></a>";
+  } else {
+   \$icon_url = htmlentitiesu8("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVQI12NgAAIAAAUAAeImBZsAAAAASUVORK5CYII=", True);
+   \$code .= "\"><img src=\"\$icon_url\" class=\"empty\" alt=\"Icon\" /></a>";
+  }
   if (\$orientation == "vertical") \$code .= "</div>";
   echo \$code;
  }
@@ -529,7 +539,7 @@ else {
 /* Portal
  * 
  * Copyright (C) 2006-2018 Scott Zeid
- * http://code.srwz.us/portal
+ * https://code.s.zeid.me/portal
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -786,6 +796,13 @@ img {
 }
  #minibar a img {
   margin-top: 4px;
+  width: 16px; height: 16px;
+ }
+ #minibar a img.empty {
+  background-image: url("{{qmark_icon()}}");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 16px 16px;
  }
 #action_minibar.mobile {
  font-size: 1em;

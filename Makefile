@@ -3,7 +3,7 @@ out := index.php
 
 all: ${out}
 
-${out}: ${main} $(wildcard lib/*) $(filter-out ${main},$(wildcard src/*))
+${out}: ${main} $(sort $(wildcard lib/*.php)) $(sort $(filter-out ${main},$(wildcard src/*.php)))
 	@echo deps: $^
 	$(foreach f,$^,php -l $(f);)
 	printf '<?php' > $@
