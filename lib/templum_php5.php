@@ -23,11 +23,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  * 
- * Modified by S. Zeid <https://s.zeid.me/> to fix Template::templateFromString().
+ * Modified by S. Zeid <https://s.zeid.me/> to fix Template::templateFromString()
+ * and to use new-style class constructors.
  * 
 */
 
-define("TEMPLUM_VERSION", "0.4.0-sz-1");
+define("TEMPLUM_VERSION", "0.4.0-sz-2");
 
 /**
  * @brief Templum errors.
@@ -42,7 +43,7 @@ class TemplumError extends Exception {
 	 * @param $message (string) The error message.
 	 * @param $code (int) The error code
 	 */
-	public function TemplumError($message, $code = 0) {
+	public function __construct($message, $code = 0) {
 		parent::__construct($message, $code);
 	}
 
@@ -66,7 +67,7 @@ class TemplumTemplateError extends Exception {
 	 * @param $code (int) The error code
 	 * @param $template (TemplumTemplate) The template containing the error.
 	 */
-	public function TemplumTemplateError($message, $code = 0, $template = NULL) {
+	public function __construct($message, $code = 0, $template = NULL) {
 		$this->template = $template;
 		parent::__construct($message, $code);
 	}
@@ -95,7 +96,7 @@ class Templum {
 	 * @param $locale (string) The locale for the templates to retrieve. If a file with the suffix noted in $locale is available, it will be returned instead of the default .tpl file.
 	 * @throw TemplumError if the $templatePath can't be found or isn't a directory.
 	 */
-	public function Templum($templatePath, $varsUniversal = array(), $locale = NULL) {
+	public function __construct($templatePath, $varsUniversal = array(), $locale = NULL) {
 		if (!file_exists($templatePath)) {
 			throw new TemplumError("No such file or directory: $templatePath", 1);
 		}
@@ -212,10 +213,11 @@ class Templum {
 		//}
 
 		// Load the base or translated template.
+		$templum = new Templum(".");
 		$template = new TemplumTemplate(
 				NULL,
 				"FROM_STRING",
-				self::compile($contents, $autoEscape), 
+				$templum->compile($contents, $autoEscape),
 				array()
 			);
 		return($template);
@@ -269,7 +271,7 @@ class TemplumTemplate {
 	 * @param $contents (string) The compiled contents of this template.
 	 * @param $varsGlobal (array) An array of key/value pairs which represent the global variables for this template and the templates it includes.
 	 */
-	public function TemplumTemplate($templum, $filename, $contents, $varsGlobal = array()) {
+	public function __construct($templum, $filename, $contents, $varsGlobal = array()) {
 		$this->templum = $templum;
 		$this->filename = $filename;
 		$this->contents = $contents;
