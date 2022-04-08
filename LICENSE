@@ -1,6 +1,6 @@
 Portal
 
-Copyright (C) 2006-2018 Scott Zeid
+Copyright (C) 2006-2018 S. Zeid
 https://code.s.zeid.me/portal
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -100,4 +100,4 @@ This program contains the following libraries or portions of them:
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
     THE SOFTWARE.
     
-    Modified by Scott Zeid <s@srwz.us> to fix Template::templateFromString().
+    Modified by S. Zeid <https://s.zeid.me/> to fix Template::templateFromString().

@@ -1068,7 +1068,7 @@ do {
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  * 
- * Modified by Scott Zeid <s@srwz.us> to fix Template::templateFromString().
+ * Modified by S. Zeid <https://s.zeid.me/> to fix Template::templateFromString().
  * 
 */
 
@@ -1416,7 +1416,7 @@ class TemplumTemplate {
 /* is_mobile()
  * Shitty mobile device detection based on shitty user agent strings.
  * 
- * Copyright (C) 2009-2012 Scott Zeid
+ * Copyright (C) 2009-2012 S. Zeid
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -1543,7 +1543,7 @@ function qmark_icon() {
  
 /* Portal                                                                   {{{1
  * 
- * Copyright (C) 2006-2018 Scott Zeid
+ * Copyright (C) 2006-2018 S. Zeid
  * https://code.s.zeid.me/portal
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -1810,7 +1810,7 @@ else if (!isset($_GET["css"]) || !trim($_GET["css"]) != "") {
   
    Portal
    
-   Copyright (C) 2006-2018 Scott Zeid
+   Copyright (C) 2006-2018 S. Zeid
    https://code.s.zeid.me/portal
    
    Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -1860,7 +1860,7 @@ else if (!isset($_GET["css"]) || !trim($_GET["css"]) != "") {
 @endif
   <!--/openid-->
 @endif // OpenID
-  <meta name="generator" content="Portal by Scott Zeid; X11 License; https://code.s.zeid.me/portal" />
+  <meta name="generator" content="Portal by S. Zeid; X11 License; https://code.s.zeid.me/portal" />
   <link rel="stylesheet" type="text/css" href="{{\$url_scheme}}://fonts.googleapis.com/css?family=Ubuntu:regular,italic,bold,bolditalic" />
   <link rel="stylesheet" type="text/css" href="?css={{\$theme}}&amp;.css" />
 @if (\$mobile):
@@ -2024,7 +2024,7 @@ foreach (\$portal["sites"] as \$slug => &\$site) {
   <div id="footer" class="footer[[if (\$small) echo " small";]]">
    <p>
     <a href="https://code.s.zeid.me/portal">Portal software</a>
-    copyright &copy; [[echo copyright_year(2006);]] <a href="https://s.zeid.me/">Scott Zeid</a>.
+    copyright &copy; [[echo copyright_year(2006);]] <a href="https://s.zeid.me/">S. Zeid</a>.
    </p>
 [[if (\$portal["custom-footer-content"])
    echo indent(htmlsymbols(trim(\$portal["custom-footer-content"], "\r\n")), 3)."\n";]]
@@ -2079,7 +2079,7 @@ else {
  echo tpl(<<<CSS
 /* Portal
  * 
- * Copyright (C) 2006-2018 Scott Zeid
+ * Copyright (C) 2006-2018 S. Zeid
  * https://code.s.zeid.me/portal
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy

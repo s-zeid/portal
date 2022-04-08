@@ -47,9 +47,9 @@ banner:
 #         index: Set to False to hide in the main list; leave out otherwise
 #         minibar: Set to False to hide in the minibar list; leave out otherwise
 sites:
-    scott-zeid:
-        name: Scott Zeid
-        icon: scottywz.png
+    s-zeid:
+        name: S. Zeid
+        icon: s-zeid.png
         url:  https://s.zeid.me/
         desc: This <del>really cool person</del> f***ing narcissist who made this portal software
 

@@ -3,7 +3,7 @@
 /* is_mobile()
  * Shitty mobile device detection based on shitty user agent strings.
  * 
- * Copyright (C) 2009-2012 Scott Zeid
+ * Copyright (C) 2009-2012 S. Zeid
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
