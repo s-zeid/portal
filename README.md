@@ -1,7 +1,7 @@
 Portal
 ======
 
-Copyright (C) 2006-2018 S. Zeid  
+Copyright (C) 2006-2022 S. Zeid  
 <https://code.s.zeid.me/portal>
 
 

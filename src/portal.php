@@ -1,8 +1,8 @@
-<?php
+<?php const PORTAL_COPYRIGHT_YEARS = [2006, 2022];
  
 /* Portal                                                                   {{{1
  * 
- * Copyright (C) 2006-2018 S. Zeid
+ * Copyright (C) 2006-2022 S. Zeid
  * https://code.s.zeid.me/portal
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -112,6 +112,9 @@ $names = explode(",", "CONFIG_DIR,device,ga_enabled,mobile,name,"
 foreach ($names as $n) {
  $namespace[$n] = &$$n;
 }
+$namespace["__private"] = array(
+ "portal_copyright_years" => portal_copyright_years(),
+);
 
 // Debug output  {{{1
 if ($debug) {
@@ -269,7 +272,7 @@ else if (!isset($_GET["css"]) || !trim($_GET["css"]) != "") {
   
    Portal
    
-   Copyright (C) 2006-2018 S. Zeid
+   Copyright (C) {{\$__private["portal_copyright_years"]}} S. Zeid
    https://code.s.zeid.me/portal
    
    Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -483,7 +486,7 @@ foreach (\$portal["sites"] as \$slug => &\$site) {
   <div id="footer" class="footer[[if (\$small) echo " small";]]">
    <p>
     <a href="https://code.s.zeid.me/portal">Portal software</a>
-    copyright &copy; [[echo copyright_year(2006);]] <a href="https://s.zeid.me/">S. Zeid</a>.
+    copyright &copy; [[echo portal_copyright_years("&ndash;");]] <a href="https://s.zeid.me/">S. Zeid</a>.
    </p>
 [[if (\$portal["custom-footer-content"])
    echo indent(htmlsymbols(trim(\$portal["custom-footer-content"], "\r\n")), 3)."\n";]]
@@ -538,7 +541,7 @@ else {
  echo tpl(<<<CSS
 /* Portal
  * 
- * Copyright (C) 2006-2018 S. Zeid
+ * Copyright (C) {{\$__private["portal_copyright_years"]}} S. Zeid
  * https://code.s.zeid.me/portal
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -816,11 +819,12 @@ if ($custom_css) echo "\n\n".tpl($custom_css, $namespace, False);
 
 // Helper functions  {{{1
 
-function copyright_year($start = Null, $end = Null) {
+function copyright_year($start = Null, $end = Null, $separator = Null) {
  if (!$start) $start = date("Y");
  if (!$end) $end = date("Y");
+ if (!$separator) $separator = "-";
  if ($start == $end) return $start;
- return $start."-".$end;
+ return "$start$separator$end";
 }
 
 function htmlentitiesu8($s, $encode_twice = False) {
@@ -843,6 +847,11 @@ function indent($s, $n) {
   $s[$i] = str_repeat(" ", $n).$l;
  }
  return implode("\n", $s);
+}
+
+function portal_copyright_years($separator = Null) {
+ [$start, $end] = PORTAL_COPYRIGHT_YEARS;
+ return copyright_year($start, $end, $separator);
 }
 
 function tpl($s, $namespace = Null, $esc = True) {

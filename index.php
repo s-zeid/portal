@@ -1537,11 +1537,11 @@ function is_mobile($return_device = False, $use_get = True) {
 function qmark_icon() {
  return "data:image/png;base64,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";
 }
-
+ const PORTAL_COPYRIGHT_YEARS = [2006, 2022];
  
 /* Portal                                                                   {{{1
  * 
- * Copyright (C) 2006-2018 S. Zeid
+ * Copyright (C) 2006-2022 S. Zeid
  * https://code.s.zeid.me/portal
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -1651,6 +1651,9 @@ $names = explode(",", "CONFIG_DIR,device,ga_enabled,mobile,name,"
 foreach ($names as $n) {
  $namespace[$n] = &$$n;
 }
+$namespace["__private"] = array(
+ "portal_copyright_years" => portal_copyright_years(),
+);
 
 // Debug output  {{{1
 if ($debug) {
@@ -1808,7 +1811,7 @@ else if (!isset($_GET["css"]) || !trim($_GET["css"]) != "") {
   
    Portal
    
-   Copyright (C) 2006-2018 S. Zeid
+   Copyright (C) {{\$__private["portal_copyright_years"]}} S. Zeid
    https://code.s.zeid.me/portal
    
    Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -2022,7 +2025,7 @@ foreach (\$portal["sites"] as \$slug => &\$site) {
   <div id="footer" class="footer[[if (\$small) echo " small";]]">
    <p>
     <a href="https://code.s.zeid.me/portal">Portal software</a>
-    copyright &copy; [[echo copyright_year(2006);]] <a href="https://s.zeid.me/">S. Zeid</a>.
+    copyright &copy; [[echo portal_copyright_years("&ndash;");]] <a href="https://s.zeid.me/">S. Zeid</a>.
    </p>
 [[if (\$portal["custom-footer-content"])
    echo indent(htmlsymbols(trim(\$portal["custom-footer-content"], "\r\n")), 3)."\n";]]
@@ -2077,7 +2080,7 @@ else {
  echo tpl(<<<CSS
 /* Portal
  * 
- * Copyright (C) 2006-2018 S. Zeid
+ * Copyright (C) {{\$__private["portal_copyright_years"]}} S. Zeid
  * https://code.s.zeid.me/portal
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -2355,11 +2358,12 @@ if ($custom_css) echo "\n\n".tpl($custom_css, $namespace, False);
 
 // Helper functions  {{{1
 
-function copyright_year($start = Null, $end = Null) {
+function copyright_year($start = Null, $end = Null, $separator = Null) {
  if (!$start) $start = date("Y");
  if (!$end) $end = date("Y");
+ if (!$separator) $separator = "-";
  if ($start == $end) return $start;
- return $start."-".$end;
+ return "$start$separator$end";
 }
 
 function htmlentitiesu8($s, $encode_twice = False) {
@@ -2382,6 +2386,11 @@ function indent($s, $n) {
   $s[$i] = str_repeat(" ", $n).$l;
  }
  return implode("\n", $s);
+}
+
+function portal_copyright_years($separator = Null) {
+ [$start, $end] = PORTAL_COPYRIGHT_YEARS;
+ return copyright_year($start, $end, $separator);
 }
 
 function tpl($s, $namespace = Null, $esc = True) {
