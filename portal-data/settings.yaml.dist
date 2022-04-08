@@ -56,7 +56,7 @@ sites:
 # Extra content to put in the footer.  This can be disclaimers, contact info,
 # or anything else you see fit.  Templum syntax is accepted here.
 custom-footer-content: |
- <p>Send spam to <a href="mailto:spam@greenmidgetcafe.com">spam@greenmidgetcafe.com</a></p>
+ <p>Ceci n'est pas une portal.</p>
 
 # Extra content to put in the HTML head element.  Templum syntax is
 # accepted here.
