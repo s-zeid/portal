@@ -3,7 +3,7 @@
 /* is_mobile()
  * Shitty mobile device detection based on shitty user agent strings.
  * 
- * Copyright (C) 2009-2012 S. Zeid
+ * Copyright (C) 2009-2012, 2022 S. Zeid
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -40,7 +40,7 @@
  * device=[...] takes precedence over mobile=[...].
  * 
  * Valid device types are firefox-tablet, firefox, chrome-tablet, chrome,
- * android-tablet, android, webos, tablet, unknown, apple, and apple-tablet
+ * android-tablet, android, tablet, unknown, apple, and apple-tablet
  * (listed in descending order of the author's personal preference).  Android
  * tablets and iPads are not considered to be mobile devices, but is_mobile()
  * will still return a device name ending in "-tablet", as appropriate for the
@@ -49,8 +49,6 @@
  * If the user is running Firefox Mobile, the device name would be "firefox",
  * or "firefox-tablet" if it is a tablet.  The same is true for users using
  * Chrome, except (obviously) "firefox" would be replaced with "chrome".
- * Although it has been discontinued for a while, support for the HP Touchpad
- * may be added in the future; its device name would be "webos-tablet".
  * 
  * @param bool $return_device Return a string representing the type of device.
  * @param bool $use_get Allow overriding default behavior using query strings.
@@ -81,7 +79,6 @@ function is_mobile($return_device = False, $use_get = True) {
  if (((
      (stristr($user_agent, "Android") && !stristr($user_agent, "Android 3.") &&
       stristr($user_agent, "Mobile")) ||
-     stristr($user_agent, "webOS") ||
      ((stristr($user_agent, "Firefox") || stristr($user_agent, "Fennec")) &&
       stristr($user_agent, "Mobile")) ||
      stristr($user_agent, "iPhone") || stristr($user_agent, "iPod")
@@ -103,7 +100,6 @@ function is_mobile($return_device = False, $use_get = True) {
   if (stristr($user_agent, "Tablet")) $device = "firefox-tablet";
   else $device = "firefox";
  }
- if (stristr($user_agent, "webOS")) $device = "webos";
  if (stristr($user_agent, "iPhone") || stristr($user_agent, "iPod"))
   $device = "apple";
  if (stristr($user_agent, "iPad")) $device = "apple-tablet";
