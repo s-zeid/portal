@@ -23,17 +23,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  * 
- * Modified by S. Zeid <https://s.zeid.me/> to fix Template::templateFromString()
- * and to use new-style class constructors.
+ * Modified by S. Zeid <https://s.zeid.me/> to:
+ * - Fix Template::templateFromString()
+ * - Use new-style class constructors
+ * - Remove unnecessary TemplumTemplate->errorHandlerOrig property
  * 
 */
 
-define("TEMPLUM_VERSION", "0.4.0-sz-2");
+define("TEMPLUM_VERSION", "0.4.0-sz-3");
 
 /**
  * @brief Templum errors.
  * 
- * This exception is thrown by the Templum class when errors occur
+ õk* This exception is thrown by the Templum class when errors occur
  * during instantiation or when loading and parsing templates.
  */
 class TemplumError extends Exception {
@@ -306,7 +308,7 @@ class TemplumTemplate {
 		// Temporary set the error handler so we can show the faulty template
 		// file. Render the contents, reset the error handler and return the
 		// rendered contents.
-		$this->errorHandlerOrig = set_error_handler(array($this, 'errorHandler'));
+		$_errorHandlerOrig = set_error_handler(array($this, 'errorHandler'));
 		eval("?>" . $this->contents);
 		restore_error_handler();
 

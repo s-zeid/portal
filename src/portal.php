@@ -1,4 +1,4 @@
-<?php const PORTAL_COPYRIGHT_YEARS = [2006, 2022];
+<?php const PORTAL_COPYRIGHT_YEARS = [2006, 2025];
  
 /* Portal                                                                   {{{1
  * 
